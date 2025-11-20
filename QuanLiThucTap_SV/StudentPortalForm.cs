@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace QuanLiThucTap_SV
 {
-    public partial class FrmSinhVien : Form
+    public partial class StudentPortalForm : Form
     {
-        public FrmSinhVien()
+        public StudentPortalForm()
         {
             InitializeComponent();
         }

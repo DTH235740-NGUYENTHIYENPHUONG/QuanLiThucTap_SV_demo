@@ -89,24 +89,5 @@ namespace QuanLiThucTap_SV
                 this.Close();
             }
         }
-
-        private void tsmiSinhVien_Click(object sender, EventArgs e)
-        {
-            // Kiểm tra Form đã mở chưa
-            // MDI container thường chỉ cho phép mở một instance của mỗi form con
-            foreach (Form frm in this.MdiChildren)
-            {
-                if (frm is FrmSinhVien)
-                {
-                    frm.Activate(); // Kích hoạt form nếu đã mở
-                    return;
-                }
-            }
-
-            // Form chưa mở, tạo mới và hiển thị
-            FrmSinhVien frmSV = new FrmSinhVien();
-            frmSV.MdiParent = this; // Đặt MainForm làm cha 
-            frmSV.Show();
-        }
     }
 }

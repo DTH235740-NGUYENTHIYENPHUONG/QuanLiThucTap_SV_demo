@@ -28,33 +28,38 @@ namespace QuanLiThucTap_SV
             string password = txtPassword.Text.Trim(); 
             string userRole; // Biến để lưu quyền người dùng
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ Tên đăng nhập và Mật khẩu.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            if(Database.CheckLogin(username, password, out userRole))
+{
+                this.Hide(); // Ẩn form Login
 
-            // 1. Kiểm tra Đăng nhập
-            if (Database.CheckLogin(username, password, out userRole))
-            {
-                // 2. Thành công: Mở Form Trang Chủ
-                MessageBox.Show($"Đăng nhập thành công với quyền: {userRole}!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // PHÂN LUỒNG MỞ FORM THEO VAI TRÒ
+                switch (userRole)
+                {
+                    case "Admin":
+                        MainForm adminMain = new MainForm("Admin"); // MainForm chứa MenuStrip QL toàn hệ thống
+                        adminMain.Show();
+                        break;
 
-                // Tạo và hiển thị Form Trang Chủ (Giả sử bạn đặt tên là MainForm)
-                MainForm mainForm = new MainForm(userRole); // Truyền userRole vào MainForm
-                mainForm.Show();
+                    case "GiangVien":
+                        LecturerForm gvForm = new LecturerForm(); // Form quản lý SV Giám sát
+                        gvForm.Show();
+                        break;
 
-                // Ẩn Form Đăng nhập hiện tại
-                this.Hide();
+                    case "CongTy":
+                        CompanyForm ctForm = new CompanyForm(); // Form quản lý SV Thực tập
+                        ctForm.Show();
+                        break;
 
-                // **TODO:** Bạn nên truyền thông tin userRole vào MainForm để xử lý phân quyền MenuStrip
-            }
-            else
-            {
-                // 3. Thất bại
-                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng.", "Lỗi Đăng Nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtPassword.Clear(); // Xóa mật khẩu để người dùng nhập lại
-                txtUsername.Focus(); // Đặt con trỏ vào ô Tên đăng nhập
+                    case "SinhVien":
+                        StudentPortalForm svPortal = new StudentPortalForm(); // Form thông tin SV
+                        svPortal.Show();
+                        break;
+
+                    default:
+                        MessageBox.Show("Vai trò không xác định. Vui lòng liên hệ quản trị viên.");
+                        new LoginForm().Show(); // Mở lại Login
+                        break;
+                }
             }
         }
 

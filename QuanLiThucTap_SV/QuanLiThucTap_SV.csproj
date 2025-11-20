@@ -95,12 +95,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database.cs" />
-    <Compile Include="FrmSinhVien.cs">
+    <Compile Include="CompanyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmSinhVien.Designer.cs">
-      <DependentUpon>FrmSinhVien.cs</DependentUpon>
+    <Compile Include="CompanyForm.Designer.cs">
+      <DependentUpon>CompanyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database.cs" />
+    <Compile Include="LecturerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LecturerForm.Designer.cs">
+      <DependentUpon>LecturerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -116,9 +122,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmSinhVien.resx">
-      <DependentUpon>FrmSinhVien.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="StudentPortalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentPortalForm.Designer.cs">
+      <DependentUpon>StudentPortalForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>

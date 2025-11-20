@@ -122,7 +122,7 @@
             this.tsmiSinhVien.Name = "tsmiSinhVien";
             this.tsmiSinhVien.Size = new System.Drawing.Size(270, 34);
             this.tsmiSinhVien.Text = "Sinh Viên";
-            this.tsmiSinhVien.Click += new System.EventHandler(this.tsmiSinhVien_Click);
+            //this.tsmiSinhVien.Click += new System.EventHandler(this.tsmiSinhVien_Click);
             // 
             // giảngViênToolStripMenuItem
             // 
