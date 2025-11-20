@@ -8,7 +8,7 @@ namespace QuanLiThucTap_SV
     internal class Database
     {
         // Cập nhật thông tin kết nối CSDL 
-        private static string connectionString = "Server=localhost;Database=qltt;Uid=root;Pwd=123456;";
+        private static string connectionString = "Server=localhost;Database=quanlithuctap;Uid=root;Pwd=123456;";
 
 
         public static MySqlConnection GetConnection()
@@ -16,18 +16,18 @@ namespace QuanLiThucTap_SV
             return new MySqlConnection(connectionString);
         }
 
-        public static bool CheckLogin(string username, string password, out string role)
+        public static bool CheckLogin(string username, string passcode, out string role)
         {
             role = string.Empty;
        
-            string query = "SELECT Role FROM USERS WHERE Username = @user AND Password = @pass AND TrangThai = 1";
+            string query = "SELECT Role FROM USERS WHERE Username = @user AND Passcode = @pass AND TrangThai = 1";
 
             using (MySqlConnection connection = GetConnection())
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@user", username);
-                    command.Parameters.AddWithValue("@pass", password);
+                    command.Parameters.AddWithValue("@pass", passcode);
 
                     try
                     {

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qltt
+-- Host: 127.0.0.1    Database: quanlithuctap
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -16,39 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `phancong_thuctap`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `phancong_thuctap`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `phancong_thuctap` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `MaSV` varchar(10) NOT NULL,
-  `MaDot` varchar(10) NOT NULL,
-  `MaCT` int NOT NULL,
-  `MaGVGS` varchar(10) NOT NULL,
-  `NgayBatDauTT` date NOT NULL,
-  `TrangThai` enum('Dang TT','Hoan Thanh','Huy','Cho Duyet') NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `MaSV` (`MaSV`),
-  KEY `MaDot` (`MaDot`),
-  KEY `MaCT` (`MaCT`),
-  KEY `MaGVGS` (`MaGVGS`),
-  CONSTRAINT `phancong_thuctap_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `phancong_thuctap_ibfk_2` FOREIGN KEY (`MaDot`) REFERENCES `dotthuctap` (`MaDot`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `phancong_thuctap_ibfk_3` FOREIGN KEY (`MaCT`) REFERENCES `congty` (`MaCT`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `phancong_thuctap_ibfk_4` FOREIGN KEY (`MaGVGS`) REFERENCES `giangvien` (`MaGV`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `users` (
+  `MaUser` int NOT NULL AUTO_INCREMENT,
+  `Username` varchar(50) NOT NULL,
+  `Passcode` varchar(255) NOT NULL,
+  `HoTen` varchar(100) DEFAULT NULL,
+  `Role` enum('Admin','GiangVien','Công Ty','Sinh Viên') NOT NULL,
+  `TrangThai` tinyint DEFAULT '1',
+  PRIMARY KEY (`MaUser`),
+  UNIQUE KEY `Username` (`Username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `phancong_thuctap`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `phancong_thuctap` WRITE;
-/*!40000 ALTER TABLE `phancong_thuctap` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phancong_thuctap` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin','123','Nguyễn Văn A','Admin',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-20 13:28:36
+-- Dump completed on 2025-11-20 15:13:51

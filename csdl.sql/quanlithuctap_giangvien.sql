@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qltt
+-- Host: 127.0.0.1    Database: quanlithuctap
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -16,29 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `dotthuctap`
+-- Table structure for table `giangvien`
 --
 
-DROP TABLE IF EXISTS `dotthuctap`;
+DROP TABLE IF EXISTS `giangvien`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dotthuctap` (
-  `MaDot` varchar(10) NOT NULL,
-  `TenDot` varchar(100) NOT NULL,
-  `NgayBatDau` date NOT NULL,
-  `NgayKetThuc` date NOT NULL,
-  `LoaiThucTap` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`MaDot`)
+CREATE TABLE `giangvien` (
+  `MaGV` varchar(10) NOT NULL,
+  `HoTen` varchar(100) NOT NULL,
+  `MaKhoa` varchar(10) DEFAULT NULL,
+  `Email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`MaGV`),
+  UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dotthuctap`
+-- Dumping data for table `giangvien`
 --
 
-LOCK TABLES `dotthuctap` WRITE;
-/*!40000 ALTER TABLE `dotthuctap` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dotthuctap` ENABLE KEYS */;
+LOCK TABLES `giangvien` WRITE;
+/*!40000 ALTER TABLE `giangvien` DISABLE KEYS */;
+/*!40000 ALTER TABLE `giangvien` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-20 13:28:36
+-- Dump completed on 2025-11-20 15:13:51

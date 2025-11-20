@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qltt
+-- Host: 127.0.0.1    Database: quanlithuctap
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -16,33 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `baocao_tiendo`
+-- Table structure for table `phancong`
 --
 
-DROP TABLE IF EXISTS `baocao_tiendo`;
+DROP TABLE IF EXISTS `phancong`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `baocao_tiendo` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `MaPhanCong` int NOT NULL,
-  `TieuDe` varchar(255) NOT NULL,
-  `NgayNop` datetime NOT NULL,
-  `DuongDanFile` varchar(500) DEFAULT NULL,
-  `NhanXetGV` text,
-  `DiemGV` decimal(4,2) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `MaPhanCong` (`MaPhanCong`),
-  CONSTRAINT `baocao_tiendo_ibfk_1` FOREIGN KEY (`MaPhanCong`) REFERENCES `phancong_thuctap` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `phancong` (
+  `MaSV` varchar(10) NOT NULL,
+  `MaCT` int NOT NULL,
+  `MaGVGS` varchar(10) NOT NULL,
+  `NgayBatDauTT` date NOT NULL,
+  `TrangThai` enum('Dang TT','Hoan Thanh','Huy','Cho Duyet') NOT NULL,
+  KEY `MaSV` (`MaSV`),
+  KEY `MaCT` (`MaCT`),
+  KEY `MaGVGS` (`MaGVGS`),
+  CONSTRAINT `phancong_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `phancong_ibfk_2` FOREIGN KEY (`MaCT`) REFERENCES `congty` (`MaCT`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `phancong_ibfk_3` FOREIGN KEY (`MaGVGS`) REFERENCES `giangvien` (`MaGV`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `baocao_tiendo`
+-- Dumping data for table `phancong`
 --
 
-LOCK TABLES `baocao_tiendo` WRITE;
-/*!40000 ALTER TABLE `baocao_tiendo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `baocao_tiendo` ENABLE KEYS */;
+LOCK TABLES `phancong` WRITE;
+/*!40000 ALTER TABLE `phancong` DISABLE KEYS */;
+/*!40000 ALTER TABLE `phancong` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-20 13:28:36
+-- Dump completed on 2025-11-20 15:13:51

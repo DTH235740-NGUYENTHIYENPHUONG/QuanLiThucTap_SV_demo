@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qltt
+-- Host: 127.0.0.1    Database: quanlithuctap
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -16,29 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `giangvien`
+-- Table structure for table `sinhvien`
 --
 
-DROP TABLE IF EXISTS `giangvien`;
+DROP TABLE IF EXISTS `sinhvien`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `giangvien` (
-  `MaGV` varchar(10) NOT NULL,
+CREATE TABLE `sinhvien` (
+  `MaSV` varchar(10) NOT NULL,
   `HoTen` varchar(100) NOT NULL,
-  `MaKhoa` varchar(10) DEFAULT NULL,
+  `NgaySinh` date DEFAULT NULL,
+  `GioiTinh` varchar(10) DEFAULT NULL,
   `Email` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`MaGV`),
+  `SoDienThoai` varchar(15) DEFAULT NULL,
+  `MaLop` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`MaSV`),
   UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `giangvien`
+-- Dumping data for table `sinhvien`
 --
 
-LOCK TABLES `giangvien` WRITE;
-/*!40000 ALTER TABLE `giangvien` DISABLE KEYS */;
-/*!40000 ALTER TABLE `giangvien` ENABLE KEYS */;
+LOCK TABLES `sinhvien` WRITE;
+/*!40000 ALTER TABLE `sinhvien` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sinhvien` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-20 13:28:36
+-- Dump completed on 2025-11-20 15:13:51
