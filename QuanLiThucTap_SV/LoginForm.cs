@@ -25,42 +25,59 @@ namespace QuanLiThucTap_SV
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUser.Text.Trim(); 
-            string password = txtPass.Text.Trim(); 
-            string userRole; // Biến để lưu quyền người dùng
+            string username = txtUser.Text.Trim();
+            string password = txtPass.Text.Trim();
 
-            if(Database.CheckLogin(username, password, out userRole))
-{
+            // Khai báo biến để nhận kết quả từ Database
+            string userRole;
+            int userID;
+
+            // Gọi hàm CheckLogin đã nâng cấp (nhận 4 tham số)
+            if (Database.CheckLogin(username, password, out userRole, out userID))
+            {
+                // 1. LƯU THÔNG TIN VÀO SESSION
+                Session.MaUser = userID;
+                Session.Role = userRole;
+
+                MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 this.Hide(); // Ẩn form Login
 
-                // PHÂN LUỒNG MỞ FORM THEO VAI TRÒ
+                // 2. PHÂN LUỒNG MỞ FORM
                 switch (userRole)
                 {
                     case "Admin":
-                        MainForm adminMain = new MainForm("Admin"); // MainForm chứa MenuStrip QL toàn hệ thống
+                        // Admin thường không cần ID cụ thể, chỉ cần quyền
+                        MainForm adminMain = new MainForm();
                         adminMain.Show();
                         break;
 
                     case "GiangVien":
-                        LecturerForm gvForm = new LecturerForm("GiangVien"); // Form quản lý SV Giám sát
+                        // Form giảng viên sẽ tự dùng Session.MaUser để tìm thông tin của mình
+                        LecturerForm gvForm = new LecturerForm();
                         gvForm.Show();
                         break;
 
                     case "CongTy":
-                        CompanyForm ctForm = new CompanyForm(); // Form quản lý SV Thực tập
+                        CompanyForm ctForm = new CompanyForm();
                         ctForm.Show();
                         break;
 
                     case "SinhVien":
-                        StudentPortalForm svPortal = new StudentPortalForm(); // Form thông tin SV
+                        // Form SV sẽ tự dùng Session.MaUser để load điểm
+                        StudentPortalForm svPortal = new StudentPortalForm();
                         svPortal.Show();
                         break;
 
                     default:
-                        MessageBox.Show("Vai trò không xác định. Vui lòng liên hệ quản trị viên.");
-                        new LoginForm().Show(); // Mở lại Login
+                        MessageBox.Show("Vai trò không hợp lệ.");
+                        this.Show(); // Hiện lại form login nếu lỗi
                         break;
                 }
+            }
+            else
+            {
+                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi Đăng Nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
