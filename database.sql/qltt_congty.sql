@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: quanlithuctap
+-- Host: 127.0.0.1    Database: qltt
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -28,9 +28,8 @@ CREATE TABLE `congty` (
   `DiaChi` varchar(255) DEFAULT NULL,
   `NguoiLienHe` varchar(100) DEFAULT NULL,
   `SoDienThoai` varchar(15) DEFAULT NULL,
-  `LinhVuc` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`MaCT`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +38,7 @@ CREATE TABLE `congty` (
 
 LOCK TABLES `congty` WRITE;
 /*!40000 ALTER TABLE `congty` DISABLE KEYS */;
+INSERT INTO `congty` VALUES (1,'AnDuc','TPHCM','Tam','0147896523');
 /*!40000 ALTER TABLE `congty` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-20 15:13:51
+-- Dump completed on 2025-11-21 14:20:34

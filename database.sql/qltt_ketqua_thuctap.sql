@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: quanlithuctap
+-- Host: 127.0.0.1    Database: qltt
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -16,29 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `giangvien`
+-- Table structure for table `ketqua_thuctap`
 --
 
-DROP TABLE IF EXISTS `giangvien`;
+DROP TABLE IF EXISTS `ketqua_thuctap`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `giangvien` (
-  `MaGV` varchar(10) NOT NULL,
-  `HoTen` varchar(100) NOT NULL,
-  `MaKhoa` varchar(10) DEFAULT NULL,
-  `Email` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`MaGV`),
-  UNIQUE KEY `Email` (`Email`)
+CREATE TABLE `ketqua_thuctap` (
+  `MaSV` varchar(10) NOT NULL,
+  `MaCT` int NOT NULL,
+  `MaGVGS` varchar(10) NOT NULL,
+  `DiemCongTy` decimal(4,2) DEFAULT NULL,
+  `DiemGVGS` decimal(4,2) DEFAULT NULL,
+  `DiemTongKet` decimal(4,2) GENERATED ALWAYS AS (((`DiemCongTy` + `DiemGVGS`) / 2)) STORED,
+  `NhanXetChung` text,
+  PRIMARY KEY (`MaSV`,`MaCT`,`MaGVGS`),
+  CONSTRAINT `fk_ketqua_phancong` FOREIGN KEY (`MaSV`, `MaCT`, `MaGVGS`) REFERENCES `phancong` (`MaSV`, `MaCT`, `MaGVGS`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `giangvien`
+-- Dumping data for table `ketqua_thuctap`
 --
 
-LOCK TABLES `giangvien` WRITE;
-/*!40000 ALTER TABLE `giangvien` DISABLE KEYS */;
-/*!40000 ALTER TABLE `giangvien` ENABLE KEYS */;
+LOCK TABLES `ketqua_thuctap` WRITE;
+/*!40000 ALTER TABLE `ketqua_thuctap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ketqua_thuctap` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-20 15:13:51
+-- Dump completed on 2025-11-21 14:20:34
