@@ -16,5 +16,7 @@ namespace QuanLiThucTap_SV
         {
             InitializeComponent();
         }
+
+
     }
 }

@@ -13,56 +13,35 @@ namespace QuanLiThucTap_SV
     public partial class LecturerForm : Form
     {
 
-        private string _maGVGS; // Biến lưu MaGV của giảng viên đang đăng nhập
-
         // Constructor mới nhận MaGV
-        public LecturerForm(string maGV)
-        {
-            InitializeComponent();
-            _maGVGS = maGV;
-            this.Text = $"Giảng viên: {_maGVGS}"; // Đặt tiêu đề Form
+         public LecturerForm(string maGV)
+         {
+             InitializeComponent();
+             _maGVGS = maGV;
+             this.Text = $"Giảng viên: {_maGVGS}"; // Đặt tiêu đề Form
 
-            // Tải sinh viên ngay khi Form được mở
-            LoadStudentsData();
-        }
+             // Tải sinh viên ngay khi Form được mở
+         }
 
-        private void LoadStudentsData()
+         private string _maGVGS; // Biến lưu MaGV của giảng viên đang đăng nhập
+        /*private void LoadStudentsData()
         {
             // Dùng hàm vừa tạo trong Database
             DataTable dt = Database.GetStudentsByLecturer(_maGVGS);
-            dgvDSSV.DataSource = dt;
+            dgvSinhVien.DataSource = dt;
 
             // Tùy chỉnh hiển thị cột DGV (tùy chọn)
-            if (dgvDSSV.Columns.Contains("MaSV")) dgvDSSV.Columns["MaSV"].HeaderText = "Mã SV";
-            if (dgvDSSV.Columns.Contains("HoTen")) dgvDSSV.Columns["HoTen"].HeaderText = "Họ và Tên";
-            if (dgvDSSV.Columns.Contains("NgaySinh")) dgvDSSV.Columns["NgaySinh"].HeaderText = "Ngày Sinh";
-            if (dgvDSSV.Columns.Contains("GioiTinh")) dgvDSSV.Columns["GioiTinh"].HeaderText = "Giới Tính";
-            if (dgvDSSV.Columns.Contains("Email")) dgvDSSV.Columns["Email"].HeaderText = "Email";
-            if (dgvDSSV.Columns.Contains("SDT")) dgvDSSV.Columns["SDT"].HeaderText = "SĐT";
-            if (dgvDSSV.Columns.Contains("MaLop")) dgvDSSV.Columns["MaLop"].HeaderText = "Mã Lớp";
+            if (dgvSinhVien.Columns.Contains("MaSV")) dgvSinhVien.Columns["MaSV"].HeaderText = "Mã SV";
+            if (dgvSinhVien.Columns.Contains("HoTen")) dgvSinhVien.Columns["HoTen"].HeaderText = "Họ và Tên";
+            if (dgvSinhVien.Columns.Contains("NgaySinh")) dgvSinhVien.Columns["NgaySinh"].HeaderText = "Ngày Sinh";
+            if (dgvSinhVien.Columns.Contains("GioiTinh")) dgvSinhVien.Columns["GioiTinh"].HeaderText = "Giới Tính";
+            if (dgvSinhVien.Columns.Contains("Email")) dgvSinhVien.Columns["Email"].HeaderText = "Email";
+            if (dgvSinhVien.Columns.Contains("SDT")) dgvSinhVien.Columns["SDT"].HeaderText = "SĐT";
+            if (dgvSinhVien.Columns.Contains("MaLop")) dgvSinhVien.Columns["MaLop"].HeaderText = "Mã Lớp";
         }
 
-        public LecturerForm()
-        {
-            InitializeComponent();
-        }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvDSSV_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnThemSinhVien_Click(object sender, EventArgs e)
+        private void btnThem_Click(object sender, EventArgs e)
         {
             string maSV = txtMaSV.Text.Trim();
             string hoTen = txtHoTen.Text.Trim();
@@ -101,6 +80,8 @@ namespace QuanLiThucTap_SV
             txtEmail.Clear();
             txtSDT.Clear();
             txtMaLop.Clear();
-        }
+        }*/
+
+
     }
 }

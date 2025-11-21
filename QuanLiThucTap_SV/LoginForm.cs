@@ -42,7 +42,7 @@ namespace QuanLiThucTap_SV
                         break;
 
                     case "GiangVien":
-                        LecturerForm gvForm = new LecturerForm(); // Form quản lý SV Giám sát
+                        LecturerForm gvForm = new LecturerForm("GiangVien"); // Form quản lý SV Giám sát
                         gvForm.Show();
                         break;
 

@@ -128,6 +128,9 @@
     <Compile Include="StudentPortalForm.Designer.cs">
       <DependentUpon>StudentPortalForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CompanyForm.resx">
+      <DependentUpon>CompanyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LecturerForm.resx">
       <DependentUpon>LecturerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,6 +149,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StudentPortalForm.resx">
+      <DependentUpon>StudentPortalForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
