@@ -30,6 +30,7 @@ namespace QuanLiThucTap_SV
             string userRole; // Biến để lưu quyền người dùng
 
             if(Database.CheckLogin(username, password, out userRole))
+
 {
                 this.Hide(); // Ẩn form Login
 
