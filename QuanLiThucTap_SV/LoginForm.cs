@@ -15,6 +15,7 @@ namespace QuanLiThucTap_SV
         public LoginForm()
         {
             InitializeComponent();
+            SetupFlatStyle();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -24,8 +25,8 @@ namespace QuanLiThucTap_SV
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim(); 
-            string password = txtPassword.Text.Trim(); 
+            string username = txtUser.Text.Trim(); 
+            string password = txtPass.Text.Trim(); 
             string userRole; // Biến để lưu quyền người dùng
 
             if(Database.CheckLogin(username, password, out userRole))

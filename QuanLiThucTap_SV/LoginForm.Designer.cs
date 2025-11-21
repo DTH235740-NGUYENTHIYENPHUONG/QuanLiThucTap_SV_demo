@@ -1,4 +1,6 @@
-﻿namespace QuanLiThucTap_SV
+﻿using System.Windows.Forms;
+
+namespace QuanLiThucTap_SV
 {
     partial class LoginForm
     {
@@ -28,116 +30,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblUsername = new System.Windows.Forms.Label();
-            this.btnLogin = new System.Windows.Forms.Button();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.lblPassword = new System.Windows.Forms.Label();
-            this.groupbox = new System.Windows.Forms.GroupBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.groupbox.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // lblUsername
-            // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(46, 120);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(258, 37);
-            this.lblUsername.TabIndex = 0;
-            this.lblUsername.Text = "Tên Đăng Nhập";
-            this.lblUsername.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // btnLogin
-            // 
-            this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogin.Location = new System.Drawing.Point(127, 484);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(215, 51);
-            this.btnLogin.TabIndex = 1;
-            this.btnLogin.Text = "Đăng Nhập";
-            this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
-            // txtUsername
-            // 
-            this.txtUsername.Location = new System.Drawing.Point(350, 117);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(487, 44);
-            this.txtUsername.TabIndex = 3;
-            // 
-            // lblPassword
-            // 
-            this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(55, 284);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(162, 37);
-            this.lblPassword.TabIndex = 4;
-            this.lblPassword.Text = "Mật Khẩu";
-            // 
-            // groupbox
-            // 
-            this.groupbox.Controls.Add(this.btnExit);
-            this.groupbox.Controls.Add(this.txtPassword);
-            this.groupbox.Controls.Add(this.lblUsername);
-            this.groupbox.Controls.Add(this.btnLogin);
-            this.groupbox.Controls.Add(this.txtUsername);
-            this.groupbox.Controls.Add(this.lblPassword);
-            this.groupbox.Location = new System.Drawing.Point(301, 106);
-            this.groupbox.Name = "groupbox";
-            this.groupbox.Size = new System.Drawing.Size(898, 603);
-            this.groupbox.TabIndex = 5;
-            this.groupbox.TabStop = false;
-            this.groupbox.Text = "Đăng Nhập";
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(350, 284);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(487, 44);
-            this.txtPassword.TabIndex = 5;
-            // 
-            // btnExit
-            // 
-            this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Location = new System.Drawing.Point(543, 484);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(215, 51);
-            this.btnExit.TabIndex = 7;
-            this.btnExit.Text = "Thoát";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // LoginForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(20F, 37F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.ClientSize = new System.Drawing.Size(1478, 844);
-            this.Controls.Add(this.groupbox);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.SystemColors.Control;
-            this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.Name = "LoginForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ĐĂNG NHẬP QUẢN LÍ THỰC TẬP";
-            this.groupbox.ResumeLayout(false);
-            this.groupbox.PerformLayout();
-            this.ResumeLayout(false);
+            this.Text = "Đăng nhập - Internship Manager";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.ClientSize = new System.Drawing.Size(420, 220);
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
 
+            lblTitle = new Label() { Text = "Đăng nhập", Left = 20, Top = 10, AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 14) };
+            var lblUser = new Label() { Text = "Tài khoản", Left = 20, Top = 50, AutoSize = true };
+            txtUser = new TextBox() { Left = 120, Top = 45, Width = 260 };
+            var lblPass = new Label() { Text = "Mật khẩu", Left = 20, Top = 90, AutoSize = true };
+            txtPass = new TextBox() { Left = 120, Top = 85, Width = 260, PasswordChar = '●' };
+
+            btnLogin = new Button() { Text = "Đăng nhập", Left = 120, Top = 130, Width = 120, Height = 35 };
+            btnLogin.Click += btnLogin_Click;
+
+            this.Controls.Add(lblTitle);
+            this.Controls.Add(lblUser);
+            this.Controls.Add(txtUser);
+            this.Controls.Add(lblPass);
+            this.Controls.Add(txtPass);
+            this.Controls.Add(btnLogin);
+        }
+
+        private void SetupFlatStyle()
+        {
+            this.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
+            btnLogin.FlatStyle = FlatStyle.Flat;
+            btnLogin.FlatAppearance.BorderSize = 0;
+            btnLogin.BackColor = System.Drawing.Color.FromArgb(32, 150, 243);
+            btnLogin.ForeColor = System.Drawing.Color.White;
         }
 
         #endregion
 
-        private System.Windows.Forms.Label lblUsername;
-        private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.GroupBox groupbox;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnExit;
+        private TextBox txtUser;
+        private TextBox txtPass;
+        private Button btnLogin;
+        private Label lblTitle;
     }
 }
 
