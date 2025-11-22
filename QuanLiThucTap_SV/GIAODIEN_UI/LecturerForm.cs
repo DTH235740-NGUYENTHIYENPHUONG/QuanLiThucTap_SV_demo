@@ -12,6 +12,7 @@ namespace QuanLiThucTap_SV
         private GiangVienBLL gvBLL = new GiangVienBLL();
         private PhanCongBLL pcBLL = new PhanCongBLL();
         private UserBLL userBLL = new UserBLL();
+        private DataTable dtPhanCong; // Biến lưu DataTable phân công cấp Class
         private string currentMaGV = string.Empty; // Biến lưu MaGV hiện tại
 
         public LecturerForm()
@@ -57,7 +58,6 @@ namespace QuanLiThucTap_SV
         {
             if (string.IsNullOrEmpty(currentMaGV)) return;
 
-            // 🔑 Cập nhật truy vấn để lấy đủ khóa chính cho việc Xóa/Sửa
             string query = @"
                 SELECT 
                     pc.MaSV, pc.MaCT, pc.MaGVGS, 
@@ -67,19 +67,22 @@ namespace QuanLiThucTap_SV
                 JOIN congty ct ON pc.MaCT = ct.MaCT
                 WHERE pc.MaGVGS = @MaGVGS"; //
 
-            MySqlParameter[] parameters = new MySqlParameter[]
-            {
-                new MySqlParameter("@MaGVGS", currentMaGV)
-            };
+            MySqlParameter[] parameters = new MySqlParameter[] { new MySqlParameter("@MaGVGS", currentMaGV) };
 
-            DataTable dt = DAL.DBHelper.GetData(query, parameters);
-            dgvSinhVien.DataSource = dt;
+            // Gán kết quả vào biến cấp Class
+            dtPhanCong = DAL.DBHelper.GetData(query, parameters);
+            dgvSinhVien.DataSource = dtPhanCong;
 
-            // 💡 Ẩn các cột khóa chính không cần thiết cho người dùng
+            // (Ẩn các cột khóa chính)
             dgvSinhVien.Columns["MaCT"].Visible = false;
             dgvSinhVien.Columns["MaGVGS"].Visible = false;
-            // Đặt cột TrangThai là ComboBox để dễ chỉnh sửa
-            // Cần chuyển cột TrangThai thành DataGridViewComboBoxColumn trong thiết kế DGV
+
+            // Đặt DGV ở chế độ cho phép sửa
+            dgvSinhVien.ReadOnly = false;
+            // Chỉ cho phép sửa cột trạng thái và ngày (các cột khác ReadOnly = true)
+            if (dgvSinhVien.Columns.Contains("TenSV")) dgvSinhVien.Columns["TenSV"].ReadOnly = true;
+            if (dgvSinhVien.Columns.Contains("TrangThai")) dgvSinhVien.Columns["TrangThai"].ReadOnly = false;
+            if (dgvSinhVien.Columns.Contains("NgayBatDauTT")) dgvSinhVien.Columns["NgayBatDauTT"].ReadOnly = false;
         }
 
 
@@ -90,45 +93,6 @@ namespace QuanLiThucTap_SV
         // ===============================================
 
 
-        private void btnThem_Click(object sender, EventArgs e)
-        {
-
-            
-        }
-
-
-
-        // ===============================================
-        // D. CẬP NHẬT ĐIỂM
-        // ===============================================
-        private void btnCapNhatDiem_Click(object sender, EventArgs e)
-        {
-            // Giảng viên sẽ cập nhật điểm giám sát (`DiemGVGS`) và nhận xét chung vào bảng `ketqua_thuctap`
-
-            // 1. Lấy MaSV, MaCT từ dòng được chọn trên dgvSinhVien
-            // 2. Mở Form nhập điểm và nhận xét (frmNhapDiem)
-            // 3. Trong frmNhapDiem, gọi hàm trong BLL để UPDATE DiemGVGS
-
-            // Example BLL function:
-            /*
-            public int UpdateDiemGVGS(string maSV, int maCT, string maGVGS, decimal diem, string nhanxet)
-            {
-                string query = "UPDATE ketqua_thuctap SET DiemGVGS = @Diem, NhanXetChung = @NhanXet WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS";
-                // ... (Parameters và ExecuteNonQuery)
-            }
-            */
-        }
-
-        // ===============================================
-        // E. ĐỔI MẬT KHẨU & ĐĂNG XUẤT
-        // ===============================================
-        private void btnDoiMatKhau_Click(object sender, EventArgs e)
-        {
-            // Mở Form Đổi Mật Khẩu (frmDoiMatKhau)
-            // Sử dụng Session.MaUser để xác định tài khoản cần đổi.
-        }
-
-        
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
@@ -175,39 +139,78 @@ namespace QuanLiThucTap_SV
         // Nút sửa trạng thái phân công
         private void btnSua_Click(object sender, EventArgs e)
         {
-            // Kiểm tra xem có hàng nào được chọn không
-            if (dgvSinhVien.SelectedRows.Count == 0)
+            // Kết thúc chỉnh sửa cell hiện tại để đảm bảo DataRowState được cập nhật
+            dgvSinhVien.EndEdit();
+
+            // 1. Lấy tất cả các hàng đã được chỉnh sửa
+            DataTable changedTable = dtPhanCong.GetChanges(DataRowState.Modified);
+
+            if (changedTable == null || changedTable.Rows.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn sinh viên cần sửa trạng thái.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Không có thay đổi nào được thực hiện để lưu.", "Thông báo");
                 return;
             }
-            // Lấy dữ liệu từ hàng được chọn
-            DataGridViewRow selectedRow = dgvSinhVien.SelectedRows[0];
-            try
-            {
-                string maSV = selectedRow.Cells["MaSV"].Value.ToString();
-                int maCT = Convert.ToInt32(selectedRow.Cells["MaCT"].Value);
-                string maGVGS = selectedRow.Cells["MaGVGS"].Value.ToString();
-                string trangThai = selectedRow.Cells["TrangThai"].Value.ToString();
-                // Gọi BLL để cập nhật trạng thái phân công
-                int result = pcBLL.UpdatePhanCongStatus(maSV, maCT, maGVGS, trangThai);
-                if (result > 0)
-                {
-                    MessageBox.Show("Cập nhật trạng thái phân công thành công!", "Thành công");
-                    LoadSinhVienPhanCong(); // Tải lại dữ liệu
-                }
-                else if (result == 0)
-                {
-                    MessageBox.Show("Không tìm thấy bản ghi phân công để cập nhật.", "Lỗi");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message, "Lỗi");
-            }
 
+            int successCount = 0;
+
+            // 2. Lặp qua các hàng đã thay đổi và gọi BLL để lưu
+            foreach (DataRow row in changedTable.Rows)
+            {
+                try
+                {
+                    string maSV = row["MaSV"].ToString();
+                    int maCT = Convert.ToInt32(row["MaCT"]);
+                    string maGVGS = row["MaGVGS"].ToString();
+
+                    // Lấy giá trị mới từ hàng
+                    string newTrangThai = row["TrangThai", DataRowVersion.Current].ToString();
+                    DateTime newNgayBatDau = Convert.ToDateTime(row["NgayBatDauTT", DataRowVersion.Current]);
+
+                    // Gọi hàm BLL để cập nhật
+                    int result = pcBLL.UpdatePhanCong(maSV, maCT, maGVGS, newTrangThai, newNgayBatDau);
+
+                    if (result > 0)
+                    {
+                        successCount++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi cập nhật sinh viên {row["TenSV"]}: {ex.Message}", "Lỗi CSDL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
         }
 
+        // ===============================================
+        // D. CẬP NHẬT ĐIỂM
+        // ===============================================
+        private void btnCapNhatDiem_Click(object sender, EventArgs e)
+        {
+            // Giảng viên sẽ cập nhật điểm giám sát (`DiemGVGS`) và nhận xét chung vào bảng `ketqua_thuctap`
+
+            // 1. Lấy MaSV, MaCT từ dòng được chọn trên dgvSinhVien
+            // 2. Mở Form nhập điểm và nhận xét (frmNhapDiem)
+            // 3. Trong frmNhapDiem, gọi hàm trong BLL để UPDATE DiemGVGS
+
+            // Example BLL function:
+            /*
+            public int UpdateDiemGVGS(string maSV, int maCT, string maGVGS, decimal diem, string nhanxet)
+            {
+                string query = "UPDATE ketqua_thuctap SET DiemGVGS = @Diem, NhanXetChung = @NhanXet WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS";
+                // ... (Parameters và ExecuteNonQuery)
+            }
+            */
+        }
+
+        // ===============================================
+        // E. ĐỔI MẬT KHẨU & ĐĂNG XUẤT
+        // ===============================================
+        private void btnDoiMatKhau_Click(object sender, EventArgs e)
+        {
+            // Mở Form Đổi Mật Khẩu (frmDoiMatKhau)
+            // Sử dụng Session.MaUser để xác định tài khoản cần đổi.
+        }
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
           

@@ -55,5 +55,24 @@ namespace QuanLiThucTap_SV.BLL
 
             return DAL.DBHelper.ExecuteNonQuery(query, parameters);
         }
+
+        public int UpdatePhanCong(string maSV, int maCT, string maGVGS, string newTrangThai, DateTime newNgayBatDau)
+        {
+            string query = @"
+        UPDATE phancong 
+        SET TrangThai = @NewTrangThai, NgayBatDauTT = @NewNgayBatDau 
+        WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS"; //
+
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+        new MySqlParameter("@NewTrangThai", newTrangThai),
+        new MySqlParameter("@NewNgayBatDau", newNgayBatDau.ToString("yyyy-MM-dd")),
+        new MySqlParameter("@MaSV", maSV),
+        new MySqlParameter("@MaCT", maCT),
+        new MySqlParameter("@MaGVGS", maGVGS)
+            };
+
+            return DAL.DBHelper.ExecuteNonQuery(query, parameters);
+        }
     }
 }

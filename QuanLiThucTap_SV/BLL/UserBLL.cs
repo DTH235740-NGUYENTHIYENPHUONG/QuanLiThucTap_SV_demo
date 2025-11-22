@@ -37,7 +37,7 @@ namespace QuanLiThucTap_SV.BLL // Lớp nghiệp vụ
             return false;
         }
 
-        
+        // Lấy thông tin giảng viên dựa trên MaUser
         public DataTable GetGiangVienInfoByMaUser(int maUser)
         {
             // B1: Lấy MaGV từ bảng USERS (cần thêm cột MaLienKet vào USERS hoặc liên kết qua 1 bảng khác)
@@ -56,6 +56,42 @@ namespace QuanLiThucTap_SV.BLL // Lớp nghiệp vụ
             };
             return DBHelper.GetData(query, parameters);
 
+        }
+
+        // Hàm kiểm tra và thay đổi mật khẩu
+        public bool ChangePasscode(int maUser, string oldPass, string newPass)
+        {
+            // B1: KIỂM TRA MẬT KHẨU CŨ CÓ ĐÚNG KHÔNG
+            string checkQuery = "SELECT COUNT(*) FROM USERS WHERE MaUser = @MaUser AND Passcode = @OldPass"; //
+
+            MySqlParameter[] checkParams = new MySqlParameter[]
+            {
+        new MySqlParameter("@MaUser", maUser),
+        new MySqlParameter("@OldPass", oldPass)
+            };
+
+            // Sử dụng GetData để kiểm tra COUNT, sau đó lấy giá trị scalar
+            DataTable dt = DAL.DBHelper.GetData(checkQuery, checkParams);
+
+            // Giả định hàm GetData trả về DataTable, cần kiểm tra kết quả trả về là 1 row, 1 column
+            if (dt == null || dt.Rows.Count == 0 || Convert.ToInt32(dt.Rows[0][0]) == 0)
+            {
+                // Mật khẩu cũ không đúng hoặc không tìm thấy người dùng
+                return false;
+            }
+
+            // B2: CẬP NHẬT MẬT KHẨU MỚI
+            string updateQuery = "UPDATE USERS SET Passcode = @NewPass WHERE MaUser = @MaUser"; //
+
+            MySqlParameter[] updateParams = new MySqlParameter[]
+            {
+        new MySqlParameter("@NewPass", newPass),
+        new MySqlParameter("@MaUser", maUser)
+            };
+
+            int rowsAffected = DAL.DBHelper.ExecuteNonQuery(updateQuery, updateParams);
+
+            return rowsAffected > 0;
         }
     }
 }
