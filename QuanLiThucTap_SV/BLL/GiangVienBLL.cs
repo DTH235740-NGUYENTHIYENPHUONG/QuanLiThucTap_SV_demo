@@ -1,7 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
-using QuanLiThucTap_SV.Models;
-using System.Data;
 using QuanLiThucTap_SV.DAL;
+using QuanLiThucTap_SV.Models;
+using System;
+using System.Data;
 
 namespace QuanLiThucTap_SV.BLL
 {
@@ -78,6 +79,55 @@ namespace QuanLiThucTap_SV.BLL
             };
 
             return DAL.DBHelper.GetData(query, parameters);
+        }
+
+        // 6. CẬP NHẬT ĐIỂM GIÁO VIÊN GIÁM SÁT (DiemGVGS) - NẾU BẢN GHI CHƯA TỒN TẠI THÌ TẠO MỚI
+        public int UpdateDiemGVGSSimple(string maSV, int maCT, string maGVGS, decimal diemGVGS)
+        {
+            // 1. KIỂM TRA bản ghi đã tồn tại chưa
+            string checkQuery = "SELECT COUNT(*) FROM ketqua_thuctap WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS"; //
+
+            MySqlParameter[] commonParams = new MySqlParameter[]
+            {
+            new MySqlParameter("@MaSV", maSV),
+            new MySqlParameter("@MaCT", maCT),
+            new MySqlParameter("@MaGVGS", maGVGS)
+            };
+
+            DataTable dt = DAL.DBHelper.GetData(checkQuery, commonParams);
+            int count = (dt != null && dt.Rows.Count > 0) ? Convert.ToInt32(dt.Rows[0][0]) : 0;
+
+            string sqlQuery;
+            MySqlParameter[] updateParams;
+
+            if (count > 0)
+            {
+                // UPDATE: Chỉ cập nhật DiemGVGS (giữ nguyên NhanXetChung nếu có)
+                sqlQuery = "UPDATE ketqua_thuctap SET DiemGVGS = @DiemGVGS WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS";
+
+                updateParams = new MySqlParameter[]
+                {
+                new MySqlParameter("@DiemGVGS", diemGVGS),
+                new MySqlParameter("@MaSV", maSV),
+                new MySqlParameter("@MaCT", maCT),
+                new MySqlParameter("@MaGVGS", maGVGS)
+                };
+            }
+            else
+            {
+                // INSERT: Thêm bản ghi mới với DiemGVGS (các cột khác NULL)
+                sqlQuery = "INSERT INTO ketqua_thuctap (MaSV, MaCT, MaGVGS, DiemGVGS) VALUES (@MaSV, @MaCT, @MaGVGS, @DiemGVGS)";
+
+                updateParams = new MySqlParameter[]
+                {
+                new MySqlParameter("@MaSV", maSV),
+                new MySqlParameter("@MaCT", maCT),
+                new MySqlParameter("@MaGVGS", maGVGS),
+                new MySqlParameter("@DiemGVGS", diemGVGS)
+                };
+            }
+
+            return DAL.DBHelper.ExecuteNonQuery(sqlQuery, updateParams);
         }
     }
 }

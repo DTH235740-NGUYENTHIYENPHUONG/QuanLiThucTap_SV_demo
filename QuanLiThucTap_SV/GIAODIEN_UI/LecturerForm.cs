@@ -59,18 +59,23 @@ namespace QuanLiThucTap_SV
         {
             if (string.IsNullOrEmpty(currentMaGV)) return;
 
+            // 🔑 Truy vấn mới: LEFT JOIN để lấy DiemGVGS
             string query = @"
-                SELECT 
-                    pc.MaSV, pc.MaCT, pc.MaGVGS, 
-                    sv.HoTen AS TenSV, ct.TenCT, pc.NgayBatDauTT, pc.TrangThai
-                FROM phancong pc
-                JOIN sinhvien sv ON pc.MaSV = sv.MaSV
-                JOIN congty ct ON pc.MaCT = ct.MaCT
-                WHERE pc.MaGVGS = @MaGVGS"; //
+            SELECT 
+                pc.MaSV, pc.MaCT, pc.MaGVGS, 
+                sv.HoTen AS TenSV, 
+                ct.TenCT, 
+                pc.NgayBatDauTT, 
+                pc.TrangThai,
+                kq.DiemGVGS 
+            FROM phancong pc
+            JOIN sinhvien sv ON pc.MaSV = sv.MaSV
+            JOIN congty ct ON pc.MaCT = ct.MaCT
+            LEFT JOIN ketqua_thuctap kq ON pc.MaSV = kq.MaSV AND pc.MaCT = kq.MaCT AND pc.MaGVGS = kq.MaGVGS
+            WHERE pc.MaGVGS = @MaGVGS"; //
 
             MySqlParameter[] parameters = new MySqlParameter[] { new MySqlParameter("@MaGVGS", currentMaGV) };
 
-            // Gán kết quả vào biến cấp Class
             dtPhanCong = DAL.DBHelper.GetData(query, parameters);
             dgvSinhVien.DataSource = dtPhanCong;
 
@@ -80,6 +85,12 @@ namespace QuanLiThucTap_SV
 
             // Đặt DGV ở chế độ cho phép sửa
             dgvSinhVien.ReadOnly = false;
+            if (dgvSinhVien.Columns.Contains("DiemGVGS"))
+            {
+                dgvSinhVien.Columns["DiemGVGS"].ReadOnly = false;
+                // Định dạng cột điểm để hiển thị số thập phân
+                dgvSinhVien.Columns["DiemGVGS"].DefaultCellStyle.Format = "N2";
+            }
             // Chỉ cho phép sửa cột trạng thái và ngày (các cột khác ReadOnly = true)
             if (dgvSinhVien.Columns.Contains("TenSV")) dgvSinhVien.Columns["TenSV"].ReadOnly = true;
             if (dgvSinhVien.Columns.Contains("TrangThai")) dgvSinhVien.Columns["TrangThai"].ReadOnly = false;
@@ -152,57 +163,113 @@ namespace QuanLiThucTap_SV
                 return;
             }
 
-            int successCount = 0;
+            int successCountPhanCong = 0;
+            int successCountDiem = 0;
+
+            // Lưu trữ các hàng lỗi để xử lý sau
+            DataRowCollection originalRows = changedTable.Rows;
+            int totalChangedRows = originalRows.Count;
 
             // 2. Lặp qua các hàng đã thay đổi và gọi BLL để lưu
-            foreach (DataRow row in changedTable.Rows)
+            for (int i = totalChangedRows - 1; i >= 0; i--)
             {
+                DataRow row = originalRows[i];
+
                 try
                 {
                     string maSV = row["MaSV"].ToString();
                     int maCT = Convert.ToInt32(row["MaCT"]);
                     string maGVGS = row["MaGVGS"].ToString();
 
-                    // Lấy giá trị mới từ hàng
+                    bool phanCongChanged = false;
+                    bool diemChanged = false;
+
+
+                    // ===============================================
+                    // 2A. XỬ LÝ LƯU THAY ĐỔI TRONG PHÂN CÔNG (Trạng thái, Ngày)
+                    // ===============================================
                     string newTrangThai = row["TrangThai", DataRowVersion.Current].ToString();
                     DateTime newNgayBatDau = Convert.ToDateTime(row["NgayBatDauTT", DataRowVersion.Current]);
 
-                    // Gọi hàm BLL để cập nhật
-                    int result = pcBLL.UpdatePhanCong(maSV, maCT, maGVGS, newTrangThai, newNgayBatDau);
-
-                    if (result > 0)
+                    // So sánh với giá trị gốc để chỉ lưu khi thực sự thay đổi
+                    if (newTrangThai != row["TrangThai", DataRowVersion.Original].ToString() ||
+                        newNgayBatDau != Convert.ToDateTime(row["NgayBatDauTT", DataRowVersion.Original]))
                     {
-                        successCount++;
+                        int result = pcBLL.UpdatePhanCong(maSV, maCT, maGVGS, newTrangThai, newNgayBatDau);
+                        if (result > 0)
+                        {
+                            successCountPhanCong++;
+                            phanCongChanged = true;
+                        }
+                    }
+
+                    // ===============================================
+                    // 2B. XỬ LÝ LƯU ĐIỂM GIÁM SÁT (DiemGVGS)
+                    // ===============================================
+                    // Kiểm tra xem cột DiemGVGS có thay đổi không
+                    if (row.Table.Columns.Contains("DiemGVGS") &&
+                        row["DiemGVGS", DataRowVersion.Current].ToString() != row["DiemGVGS", DataRowVersion.Original].ToString())
+                    {
+                        string diemStr = row["DiemGVGS", DataRowVersion.Current].ToString();
+
+                        if (decimal.TryParse(diemStr, out decimal diem))
+                        {
+                            // Validation: Điểm phải hợp lệ [0, 10]
+                            if (diem >= 0 && diem <= 10)
+                            {
+                                int diemUpdate = gvBLL.UpdateDiemGVGSSimple(maSV, maCT, maGVGS, diem);
+                                if (diemUpdate > 0)
+                                {
+                                    successCountDiem++;
+                                    diemChanged = true;
+                                }
+                            }
+                            else
+                            {
+                                // Xử lý lỗi: Điểm không hợp lệ
+                                MessageBox.Show($"Lỗi: Điểm Giám sát của sinh viên {row["TenSV"]} phải từ 0 đến 10.", "Lỗi Nghiệp Vụ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                // Quay lại hàm Load để hủy bỏ thay đổi sai
+                                LoadSinhVienPhanCong();
+                                return;
+                            }
+                        }
+                        else if (!string.IsNullOrEmpty(diemStr))
+                        {
+                            // Xử lý lỗi: Điểm không phải là số
+                            MessageBox.Show($"Lỗi: Điểm Giám sát của sinh viên {row["TenSV"]} không hợp lệ (phải là số).", "Lỗi Nhập Liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LoadSinhVienPhanCong();
+                            return;
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
+                    // Xử lý lỗi CSDL chung
                     MessageBox.Show($"Lỗi khi cập nhật sinh viên {row["TenSV"]}: {ex.Message}", "Lỗi CSDL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LoadSinhVienPhanCong();
+                    return;
                 }
-
             }
-        }
 
-        // ===============================================
-        // D. CẬP NHẬT ĐIỂM
-        // ===============================================
-        private void btnCapNhatDiem_Click(object sender, EventArgs e)
-        {
-            // Giảng viên sẽ cập nhật điểm giám sát (`DiemGVGS`) và nhận xét chung vào bảng `ketqua_thuctap`
-
-            // 1. Lấy MaSV, MaCT từ dòng được chọn trên dgvSinhVien
-            // 2. Mở Form nhập điểm và nhận xét (frmNhapDiem)
-            // 3. Trong frmNhapDiem, gọi hàm trong BLL để UPDATE DiemGVGS
-
-            // Example BLL function:
-            /*
-            public int UpdateDiemGVGS(string maSV, int maCT, string maGVGS, decimal diem, string nhanxet)
+            // 3. THÔNG BÁO KẾT QUẢ VÀ CẬP NHẬT TRẠNG THÁI DATATABLE
+            if (successCountPhanCong > 0 || successCountDiem > 0)
             {
-                string query = "UPDATE ketqua_thuctap SET DiemGVGS = @Diem, NhanXetChung = @NhanXet WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS";
-                // ... (Parameters và ExecuteNonQuery)
+                string msg = "Lưu thành công: ";
+                if (successCountPhanCong > 0) msg += $"{successCountPhanCong} thay đổi Phân Công. ";
+                if (successCountDiem > 0) msg += $"{successCountDiem} thay đổi Điểm Giám sát.";
+
+                MessageBox.Show(msg, "Lưu thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Chấp nhận thay đổi trong DataTable để reset trạng thái Modified
+                dtPhanCong.AcceptChanges();
+                LoadSinhVienPhanCong(); // Load lại để đảm bảo dữ liệu mới nhất (nếu có tính toán Điểm tổng kết)
             }
-            */
+            else
+            {
+                MessageBox.Show("Không có thay đổi nào được lưu vào cơ sở dữ liệu.", "Thông báo");
+            }
         }
+
 
         // ===============================================
         // E. ĐỔI MẬT KHẨU & ĐĂNG XUẤT
@@ -221,6 +288,8 @@ namespace QuanLiThucTap_SV
             frmDoiMatKhau doiMatKhauForm = new frmDoiMatKhau();
             doiMatKhauForm.ShowDialog();
         }
+
+        
     }
     
 }

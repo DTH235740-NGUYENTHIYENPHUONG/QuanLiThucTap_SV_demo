@@ -45,7 +45,6 @@ namespace QuanLiThucTap_SV
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.btnDoiMatKhau = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
-            this.btnThem = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSinhVien)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -160,7 +159,6 @@ namespace QuanLiThucTap_SV
             this.groupBox2.Controls.Add(this.btnDangXuat);
             this.groupBox2.Controls.Add(this.btnDoiMatKhau);
             this.groupBox2.Controls.Add(this.btnSua);
-            this.groupBox2.Controls.Add(this.btnThem);
             this.groupBox2.Location = new System.Drawing.Point(12, 343);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(284, 286);
@@ -170,7 +168,7 @@ namespace QuanLiThucTap_SV
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(0, 65);
+            this.btnXoa.Location = new System.Drawing.Point(0, 95);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(284, 34);
             this.btnXoa.TabIndex = 5;
@@ -200,22 +198,13 @@ namespace QuanLiThucTap_SV
             // 
             // btnSua
             // 
-            this.btnSua.Location = new System.Drawing.Point(0, 105);
+            this.btnSua.Location = new System.Drawing.Point(0, 55);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(284, 34);
             this.btnSua.TabIndex = 2;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = true;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
-            // 
-            // btnThem
-            // 
-            this.btnThem.Location = new System.Drawing.Point(0, 25);
-            this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(284, 34);
-            this.btnThem.TabIndex = 0;
-            this.btnThem.Text = "Thêm";
-            this.btnThem.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -254,7 +243,6 @@ namespace QuanLiThucTap_SV
         private GroupBox groupBox2;
         private Button btnDoiMatKhau;
         private Button btnSua;
-        private Button btnThem;
         private Button btnDangXuat;
         private Panel panel1;
         private Label lblMaKhoa;
