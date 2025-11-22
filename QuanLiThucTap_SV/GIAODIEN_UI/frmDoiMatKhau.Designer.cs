@@ -46,6 +46,7 @@
             this.btnLuu.TabIndex = 0;
             this.btnLuu.Text = "Lưu Mật Khẩu";
             this.btnLuu.UseVisualStyleBackColor = true;
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // btnHuy
             // 
@@ -55,6 +56,7 @@
             this.btnHuy.TabIndex = 1;
             this.btnHuy.Text = "Hủy Thao Tác";
             this.btnHuy.UseVisualStyleBackColor = true;
+            this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
             // 
             // label1
             // 

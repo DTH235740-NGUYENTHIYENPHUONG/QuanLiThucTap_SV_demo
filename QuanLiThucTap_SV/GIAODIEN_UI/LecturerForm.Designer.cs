@@ -41,12 +41,12 @@ namespace QuanLiThucTap_SV
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnXoa = new System.Windows.Forms.Button();
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.btnDoiMatKhau = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnXoa = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSinhVien)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -168,6 +168,16 @@ namespace QuanLiThucTap_SV
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Công cụ";
             // 
+            // btnXoa
+            // 
+            this.btnXoa.Location = new System.Drawing.Point(0, 65);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Size = new System.Drawing.Size(284, 34);
+            this.btnXoa.TabIndex = 5;
+            this.btnXoa.Text = "Xóa";
+            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
+            // 
             // btnDangXuat
             // 
             this.btnDangXuat.Location = new System.Drawing.Point(0, 240);
@@ -186,6 +196,7 @@ namespace QuanLiThucTap_SV
             this.btnDoiMatKhau.TabIndex = 3;
             this.btnDoiMatKhau.Text = "Đổi mật khẩu";
             this.btnDoiMatKhau.UseVisualStyleBackColor = true;
+            this.btnDoiMatKhau.Click += new System.EventHandler(this.btnDoiMatKhau_Click_1);
             // 
             // btnSua
             // 
@@ -196,7 +207,6 @@ namespace QuanLiThucTap_SV
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = true;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
-           
             // 
             // btnThem
             // 
@@ -216,16 +226,6 @@ namespace QuanLiThucTap_SV
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(314, 641);
             this.panel1.TabIndex = 4;
-            // 
-            // btnXoa
-            // 
-            this.btnXoa.Location = new System.Drawing.Point(0, 65);
-            this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(284, 34);
-            this.btnXoa.TabIndex = 5;
-            this.btnXoa.Text = "Xóa";
-            this.btnXoa.UseVisualStyleBackColor = true;
-            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // LecturerForm
             // 

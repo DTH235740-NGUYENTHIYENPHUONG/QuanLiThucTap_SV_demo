@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using QuanLiThucTap_SV.BLL;
+using QuanLiThucTap_SV.GIAODIEN_UI;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -206,11 +207,6 @@ namespace QuanLiThucTap_SV
         // ===============================================
         // E. ĐỔI MẬT KHẨU & ĐĂNG XUẤT
         // ===============================================
-        private void btnDoiMatKhau_Click(object sender, EventArgs e)
-        {
-            // Mở Form Đổi Mật Khẩu (frmDoiMatKhau)
-            // Sử dụng Session.MaUser để xác định tài khoản cần đổi.
-        }
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
           
@@ -218,6 +214,12 @@ namespace QuanLiThucTap_SV
             this.Close();    // Đóng form Giảng viên
             LoginForm login = new LoginForm();
             login.Show();    // Mở lại Form Đăng nhập
+        }
+
+        private void btnDoiMatKhau_Click_1(object sender, EventArgs e)
+        {
+            frmDoiMatKhau doiMatKhauForm = new frmDoiMatKhau();
+            doiMatKhauForm.ShowDialog();
         }
     }
     
