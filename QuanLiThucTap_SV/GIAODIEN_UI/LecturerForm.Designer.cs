@@ -32,8 +32,8 @@ namespace QuanLiThucTap_SV
         {
             this.dgvSinhVien = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblEmail = new System.Windows.Forms.Label();
+            this.lblHoTen = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -43,6 +43,10 @@ namespace QuanLiThucTap_SV
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblMaGV = new System.Windows.Forms.Label();
+            this.lblMaKhoa = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSinhVien)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -63,8 +67,12 @@ namespace QuanLiThucTap_SV
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.lblMaKhoa);
+            this.groupBox1.Controls.Add(this.lblMaGV);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.lblEmail);
+            this.groupBox1.Controls.Add(this.lblHoTen);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -74,28 +82,28 @@ namespace QuanLiThucTap_SV
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin người dùng";
             // 
-            // label5
+            // lblEmail
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(93, 64);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(131, 20);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "(thông tin liên hệ)";
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Location = new System.Drawing.Point(103, 265);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(131, 20);
+            this.lblEmail.TabIndex = 9;
+            this.lblEmail.Text = "(thông tin liên hệ)";
             // 
-            // label4
+            // lblHoTen
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(93, 37);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(125, 20);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "(tên người dùng)";
+            this.lblHoTen.AutoSize = true;
+            this.lblHoTen.Location = new System.Drawing.Point(103, 117);
+            this.lblHoTen.Name = "lblHoTen";
+            this.lblHoTen.Size = new System.Drawing.Size(125, 20);
+            this.lblHoTen.TabIndex = 8;
+            this.lblHoTen.Text = "(tên người dùng)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 64);
+            this.label3.Location = new System.Drawing.Point(18, 265);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 20);
             this.label3.TabIndex = 7;
@@ -104,7 +112,7 @@ namespace QuanLiThucTap_SV
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 37);
+            this.label2.Location = new System.Drawing.Point(18, 117);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 20);
             this.label2.TabIndex = 6;
@@ -179,6 +187,42 @@ namespace QuanLiThucTap_SV
             this.panel1.Size = new System.Drawing.Size(314, 641);
             this.panel1.TabIndex = 4;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 190);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 20);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "MaKhoa";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 37);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(55, 20);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "MaGV";
+            // 
+            // lblMaGV
+            // 
+            this.lblMaGV.AutoSize = true;
+            this.lblMaGV.Location = new System.Drawing.Point(103, 37);
+            this.lblMaGV.Name = "lblMaGV";
+            this.lblMaGV.Size = new System.Drawing.Size(107, 20);
+            this.lblMaGV.TabIndex = 12;
+            this.lblMaGV.Text = "(Mã giáo viên)";
+            // 
+            // lblMaKhoa
+            // 
+            this.lblMaKhoa.AutoSize = true;
+            this.lblMaKhoa.Location = new System.Drawing.Point(103, 190);
+            this.lblMaKhoa.Name = "lblMaKhoa";
+            this.lblMaKhoa.Size = new System.Drawing.Size(80, 20);
+            this.lblMaKhoa.TabIndex = 13;
+            this.lblMaKhoa.Text = "(Mã khoa)";
+            // 
             // LecturerForm
             // 
             this.ClientSize = new System.Drawing.Size(1044, 641);
@@ -199,8 +243,8 @@ namespace QuanLiThucTap_SV
 
         private System.Windows.Forms.DataGridView dgvSinhVien;
         private GroupBox groupBox1;
-        private Label label5;
-        private Label label4;
+        private Label lblEmail;
+        private Label lblHoTen;
         private Label label3;
         private Label label2;
         private GroupBox groupBox2;
@@ -210,5 +254,9 @@ namespace QuanLiThucTap_SV
         private Button button1;
         private Button button5;
         private Panel panel1;
+        private Label lblMaKhoa;
+        private Label lblMaGV;
+        private Label label6;
+        private Label label1;
     }
 }

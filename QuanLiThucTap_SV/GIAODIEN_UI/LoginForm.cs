@@ -6,12 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuanLiThucTap_SV.BLL;
 using System.Windows.Forms;
 
 namespace QuanLiThucTap_SV
 {
     public partial class LoginForm : Form
     {
+        private UserBLL userBLL = new UserBLL(); // Khai báo UserBLL để sử dụng
+
         public LoginForm()
         {
             InitializeComponent();
@@ -28,12 +31,11 @@ namespace QuanLiThucTap_SV
             string username = txtUser.Text.Trim();
             string password = txtPass.Text.Trim();
 
-            // Khai báo biến để nhận kết quả từ Database
             string userRole;
             int userID;
 
-            // Gọi hàm CheckLogin đã nâng cấp (nhận 4 tham số)
-            if (Database.CheckLogin(username, password, out userRole, out userID))
+            // 🔑 GỌI HÀM TỪ BLL
+            if (userBLL.CheckLogin(username, password, out userRole, out userID)) // Thay thế Database.CheckLogin
             {
                 // 1. LƯU THÔNG TIN VÀO SESSION
                 Session.MaUser = userID;
@@ -41,37 +43,30 @@ namespace QuanLiThucTap_SV
 
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                this.Hide(); // Ẩn form Login
+                this.Hide();
 
-                // 2. PHÂN LUỒNG MỞ FORM
+                // 2. PHÂN LUỒNG MỞ FORM (Giữ nguyên logic switch case của bạn)
                 switch (userRole)
                 {
                     case "Admin":
-                        // Admin thường không cần ID cụ thể, chỉ cần quyền
                         MainForm adminMain = new MainForm();
                         adminMain.Show();
                         break;
-
                     case "GiangVien":
-                        // Form giảng viên sẽ tự dùng Session.MaUser để tìm thông tin của mình
-                        LecturerForm gvForm = new LecturerForm();
-                        gvForm.Show();
+                        LecturerForm gvPortal = new LecturerForm();
+                        gvPortal.Show();
                         break;
-
                     case "CongTy":
-                        CompanyForm ctForm = new CompanyForm();
-                        ctForm.Show();
+                        CompanyForm ctPortal = new CompanyForm();
+                        ctPortal.Show();
                         break;
-
                     case "SinhVien":
-                        // Form SV sẽ tự dùng Session.MaUser để load điểm
                         StudentPortalForm svPortal = new StudentPortalForm();
                         svPortal.Show();
                         break;
-
                     default:
                         MessageBox.Show("Vai trò không hợp lệ.");
-                        this.Show(); // Hiện lại form login nếu lỗi
+                        this.Show();
                         break;
                 }
             }

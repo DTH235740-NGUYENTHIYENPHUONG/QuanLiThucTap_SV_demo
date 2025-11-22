@@ -95,50 +95,55 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompanyForm.cs">
+    <Compile Include="BLL\GiangVienBLL.cs" />
+    <Compile Include="BLL\SinhVienBLL.cs" />
+    <Compile Include="GIAODIEN_UI\CompanyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CompanyForm.Designer.cs">
+    <Compile Include="GIAODIEN_UI\CompanyForm.Designer.cs">
       <DependentUpon>CompanyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Database.cs" />
-    <Compile Include="LecturerForm.cs">
+    <Compile Include="DAL\Database.cs" />
+    <Compile Include="GIAODIEN_UI\LecturerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LecturerForm.Designer.cs">
+    <Compile Include="GIAODIEN_UI\LecturerForm.Designer.cs">
       <DependentUpon>LecturerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoginForm.cs">
+    <Compile Include="GIAODIEN_UI\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginForm.Designer.cs">
+    <Compile Include="GIAODIEN_UI\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="GIAODIEN_UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="GIAODIEN_UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\GiangVien.cs" />
+    <Compile Include="Models\SinhVien.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Session.cs" />
-    <Compile Include="StudentPortalForm.cs">
+    <Compile Include="BLL\Session.cs" />
+    <Compile Include="GIAODIEN_UI\StudentPortalForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StudentPortalForm.Designer.cs">
+    <Compile Include="GIAODIEN_UI\StudentPortalForm.Designer.cs">
       <DependentUpon>StudentPortalForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CompanyForm.resx">
+    <Compile Include="BLL\UserBLL.cs" />
+    <EmbeddedResource Include="GIAODIEN_UI\CompanyForm.resx">
       <DependentUpon>CompanyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LecturerForm.resx">
+    <EmbeddedResource Include="GIAODIEN_UI\LecturerForm.resx">
       <DependentUpon>LecturerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoginForm.resx">
+    <EmbeddedResource Include="GIAODIEN_UI\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="GIAODIEN_UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -150,7 +155,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="StudentPortalForm.resx">
+    <EmbeddedResource Include="GIAODIEN_UI\StudentPortalForm.resx">
       <DependentUpon>StudentPortalForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -167,5 +172,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
