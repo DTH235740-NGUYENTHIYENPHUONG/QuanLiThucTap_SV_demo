@@ -9,7 +9,8 @@ namespace QuanLiThucTap_SV
 {
     public partial class LecturerForm : Form
     {
-        private GiangVienBLL gvBLL = new GiangVienBLL(); 
+        private GiangVienBLL gvBLL = new GiangVienBLL();
+        private PhanCongBLL pcBLL = new PhanCongBLL();
         private UserBLL userBLL = new UserBLL();
         private string currentMaGV = string.Empty; // Biến lưu MaGV hiện tại
 
@@ -56,13 +57,11 @@ namespace QuanLiThucTap_SV
         {
             if (string.IsNullOrEmpty(currentMaGV)) return;
 
-            // 1. Viết Hàm trong BLL/GiangVienBLL để lấy danh sách sinh viên được phân công
-            // (Bạn cần tạo hàm này trong BLL)
-            // Lấy thông tin chi tiết SV, Công ty và TrangThai
-
+            // 🔑 Cập nhật truy vấn để lấy đủ khóa chính cho việc Xóa/Sửa
             string query = @"
                 SELECT 
-                    sv.MaSV, sv.HoTen AS TenSV, ct.TenCT, pc.NgayBatDauTT, pc.TrangThai
+                    pc.MaSV, pc.MaCT, pc.MaGVGS, 
+                    sv.HoTen AS TenSV, ct.TenCT, pc.NgayBatDauTT, pc.TrangThai
                 FROM phancong pc
                 JOIN sinhvien sv ON pc.MaSV = sv.MaSV
                 JOIN congty ct ON pc.MaCT = ct.MaCT
@@ -73,11 +72,14 @@ namespace QuanLiThucTap_SV
                 new MySqlParameter("@MaGVGS", currentMaGV)
             };
 
-            // Giả sử bạn tạo hàm GetSinhVienPhanCong trong GiangVienBLL hoặc Data Access
             DataTable dt = DAL.DBHelper.GetData(query, parameters);
-
-            // dgvSinhVien được hiển thị trên Panel lớn bên phải
             dgvSinhVien.DataSource = dt;
+
+            // 💡 Ẩn các cột khóa chính không cần thiết cho người dùng
+            dgvSinhVien.Columns["MaCT"].Visible = false;
+            dgvSinhVien.Columns["MaGVGS"].Visible = false;
+            // Đặt cột TrangThai là ComboBox để dễ chỉnh sửa
+            // Cần chuyển cột TrangThai thành DataGridViewComboBoxColumn trong thiết kế DGV
         }
 
 
@@ -87,13 +89,14 @@ namespace QuanLiThucTap_SV
         // Cần Form/Control để Giảng viên thêm/xóa/sửa thông tin PHÂN CÔNG, KHÔNG phải thêm/xóa/sửa thông tin gốc SV.
         // ===============================================
 
+
         private void btnThem_Click(object sender, EventArgs e)
         {
-            // Mở Form CRUD Phân Công và truyền MaGVGS hiện tại vào đó
-            // Ví dụ: frmThemPhanCong form = new frmThemPhanCong(currentMaGV);
-            // form.ShowDialog();
-            // LoadSinhVienPhanCong();
+
+            
         }
+
+
 
         // ===============================================
         // D. CẬP NHẬT ĐIỂM
@@ -125,12 +128,94 @@ namespace QuanLiThucTap_SV
             // Sử dụng Session.MaUser để xác định tài khoản cần đổi.
         }
 
+        
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem có hàng nào được chọn không
+            if (dgvSinhVien.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn sinh viên cần xóa khỏi danh sách giám sát.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult confirm = MessageBox.Show("Bạn có chắc chắn muốn xóa sinh viên này khỏi danh sách giám sát? Thao tác này sẽ xóa bản ghi Phân công và Kết quả!",
+                                                   "Xác nhận Xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                // Lấy dữ liệu từ hàng được chọn
+                DataGridViewRow selectedRow = dgvSinhVien.SelectedRows[0];
+                try
+                {
+                    string maSV = selectedRow.Cells["MaSV"].Value.ToString();
+                    int maCT = Convert.ToInt32(selectedRow.Cells["MaCT"].Value);
+                    string maGVGS = selectedRow.Cells["MaGVGS"].Value.ToString();
+
+                    // Gọi BLL để xóa bản ghi Phân Công
+                    int result = pcBLL.DeletePhanCong(maSV, maCT, maGVGS);
+
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Xóa phân công thành công!", "Thành công");
+                        LoadSinhVienPhanCong(); // Tải lại dữ liệu
+                    }
+                    else if (result == 0)
+                    {
+                        MessageBox.Show("Không tìm thấy bản ghi phân công để xóa.", "Lỗi");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xóa: " + ex.Message, "Lỗi");
+                }
+            }
+        }
+
+        // Nút sửa trạng thái phân công
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem có hàng nào được chọn không
+            if (dgvSinhVien.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn sinh viên cần sửa trạng thái.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Lấy dữ liệu từ hàng được chọn
+            DataGridViewRow selectedRow = dgvSinhVien.SelectedRows[0];
+            try
+            {
+                string maSV = selectedRow.Cells["MaSV"].Value.ToString();
+                int maCT = Convert.ToInt32(selectedRow.Cells["MaCT"].Value);
+                string maGVGS = selectedRow.Cells["MaGVGS"].Value.ToString();
+                string trangThai = selectedRow.Cells["TrangThai"].Value.ToString();
+                // Gọi BLL để cập nhật trạng thái phân công
+                int result = pcBLL.UpdatePhanCongStatus(maSV, maCT, maGVGS, trangThai);
+                if (result > 0)
+                {
+                    MessageBox.Show("Cập nhật trạng thái phân công thành công!", "Thành công");
+                    LoadSinhVienPhanCong(); // Tải lại dữ liệu
+                }
+                else if (result == 0)
+                {
+                    MessageBox.Show("Không tìm thấy bản ghi phân công để cập nhật.", "Lỗi");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message, "Lỗi");
+            }
+
+        }
+
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
+          
             Session.Logout(); // Xóa thông tin Session
             this.Close();    // Đóng form Giảng viên
             LoginForm login = new LoginForm();
             login.Show();    // Mở lại Form Đăng nhập
         }
     }
+    
 }

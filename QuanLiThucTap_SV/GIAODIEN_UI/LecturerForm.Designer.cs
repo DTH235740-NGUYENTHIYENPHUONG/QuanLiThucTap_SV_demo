@@ -32,21 +32,21 @@ namespace QuanLiThucTap_SV
         {
             this.dgvSinhVien = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblMaKhoa = new System.Windows.Forms.Label();
+            this.lblMaGV = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblHoTen = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnDangXuat = new System.Windows.Forms.Button();
+            this.btnDoiMatKhau = new System.Windows.Forms.Button();
+            this.btnSua = new System.Windows.Forms.Button();
+            this.btnThem = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblMaGV = new System.Windows.Forms.Label();
-            this.lblMaKhoa = new System.Windows.Forms.Label();
+            this.btnXoa = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSinhVien)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -81,6 +81,42 @@ namespace QuanLiThucTap_SV
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin người dùng";
+            // 
+            // lblMaKhoa
+            // 
+            this.lblMaKhoa.AutoSize = true;
+            this.lblMaKhoa.Location = new System.Drawing.Point(103, 190);
+            this.lblMaKhoa.Name = "lblMaKhoa";
+            this.lblMaKhoa.Size = new System.Drawing.Size(80, 20);
+            this.lblMaKhoa.TabIndex = 13;
+            this.lblMaKhoa.Text = "(Mã khoa)";
+            // 
+            // lblMaGV
+            // 
+            this.lblMaGV.AutoSize = true;
+            this.lblMaGV.Location = new System.Drawing.Point(103, 37);
+            this.lblMaGV.Name = "lblMaGV";
+            this.lblMaGV.Size = new System.Drawing.Size(107, 20);
+            this.lblMaGV.TabIndex = 12;
+            this.lblMaGV.Text = "(Mã giáo viên)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 37);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(55, 20);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "MaGV";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 190);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 20);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "MaKhoa";
             // 
             // lblEmail
             // 
@@ -120,11 +156,11 @@ namespace QuanLiThucTap_SV
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.btnXoa);
+            this.groupBox2.Controls.Add(this.btnDangXuat);
+            this.groupBox2.Controls.Add(this.btnDoiMatKhau);
+            this.groupBox2.Controls.Add(this.btnSua);
+            this.groupBox2.Controls.Add(this.btnThem);
             this.groupBox2.Location = new System.Drawing.Point(12, 343);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(284, 286);
@@ -132,50 +168,44 @@ namespace QuanLiThucTap_SV
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Công cụ";
             // 
-            // button5
+            // btnDangXuat
             // 
-            this.button5.Location = new System.Drawing.Point(0, 240);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(284, 34);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Đăng xuất";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnDangXuat.Location = new System.Drawing.Point(0, 240);
+            this.btnDangXuat.Name = "btnDangXuat";
+            this.btnDangXuat.Size = new System.Drawing.Size(284, 34);
+            this.btnDangXuat.TabIndex = 4;
+            this.btnDangXuat.Text = "Đăng xuất";
+            this.btnDangXuat.UseVisualStyleBackColor = true;
+            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click);
             // 
-            // button4
+            // btnDoiMatKhau
             // 
-            this.button4.Location = new System.Drawing.Point(0, 200);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(284, 34);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Đổi mật khẩu";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnDoiMatKhau.Location = new System.Drawing.Point(0, 200);
+            this.btnDoiMatKhau.Name = "btnDoiMatKhau";
+            this.btnDoiMatKhau.Size = new System.Drawing.Size(284, 34);
+            this.btnDoiMatKhau.TabIndex = 3;
+            this.btnDoiMatKhau.Text = "Đổi mật khẩu";
+            this.btnDoiMatKhau.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnSua
             // 
-            this.button3.Location = new System.Drawing.Point(0, 105);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(284, 34);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Sửa";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnSua.Location = new System.Drawing.Point(0, 105);
+            this.btnSua.Name = "btnSua";
+            this.btnSua.Size = new System.Drawing.Size(284, 34);
+            this.btnSua.TabIndex = 2;
+            this.btnSua.Text = "Sửa";
+            this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
+           
             // 
-            // button2
+            // btnThem
             // 
-            this.button2.Location = new System.Drawing.Point(0, 65);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(284, 34);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Xóa";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(0, 25);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(284, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Thêm";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnThem.Location = new System.Drawing.Point(0, 25);
+            this.btnThem.Name = "btnThem";
+            this.btnThem.Size = new System.Drawing.Size(284, 34);
+            this.btnThem.TabIndex = 0;
+            this.btnThem.Text = "Thêm";
+            this.btnThem.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -187,41 +217,15 @@ namespace QuanLiThucTap_SV
             this.panel1.Size = new System.Drawing.Size(314, 641);
             this.panel1.TabIndex = 4;
             // 
-            // label1
+            // btnXoa
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 190);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 20);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "MaKhoa";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 37);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 20);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "MaGV";
-            // 
-            // lblMaGV
-            // 
-            this.lblMaGV.AutoSize = true;
-            this.lblMaGV.Location = new System.Drawing.Point(103, 37);
-            this.lblMaGV.Name = "lblMaGV";
-            this.lblMaGV.Size = new System.Drawing.Size(107, 20);
-            this.lblMaGV.TabIndex = 12;
-            this.lblMaGV.Text = "(Mã giáo viên)";
-            // 
-            // lblMaKhoa
-            // 
-            this.lblMaKhoa.AutoSize = true;
-            this.lblMaKhoa.Location = new System.Drawing.Point(103, 190);
-            this.lblMaKhoa.Name = "lblMaKhoa";
-            this.lblMaKhoa.Size = new System.Drawing.Size(80, 20);
-            this.lblMaKhoa.TabIndex = 13;
-            this.lblMaKhoa.Text = "(Mã khoa)";
+            this.btnXoa.Location = new System.Drawing.Point(0, 65);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Size = new System.Drawing.Size(284, 34);
+            this.btnXoa.TabIndex = 5;
+            this.btnXoa.Text = "Xóa";
+            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // LecturerForm
             // 
@@ -248,15 +252,15 @@ namespace QuanLiThucTap_SV
         private Label label3;
         private Label label2;
         private GroupBox groupBox2;
-        private Button button4;
-        private Button button3;
-        private Button button2;
-        private Button button1;
-        private Button button5;
+        private Button btnDoiMatKhau;
+        private Button btnSua;
+        private Button btnThem;
+        private Button btnDangXuat;
         private Panel panel1;
         private Label lblMaKhoa;
         private Label lblMaGV;
         private Label label6;
         private Label label1;
+        private Button btnXoa;
     }
 }

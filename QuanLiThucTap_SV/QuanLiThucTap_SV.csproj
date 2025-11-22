@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\GiangVienBLL.cs" />
+    <Compile Include="BLL\PhanCongBLL.cs" />
     <Compile Include="BLL\SinhVienBLL.cs" />
     <Compile Include="GIAODIEN_UI\CompanyForm.cs">
       <SubType>Form</SubType>
@@ -123,6 +124,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\GiangVien.cs" />
+    <Compile Include="Models\PhanCong.cs" />
     <Compile Include="Models\SinhVien.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
