@@ -58,6 +58,26 @@ namespace QuanLiThucTap_SV.BLL // Lớp nghiệp vụ
 
         }
 
+        // Lấy thông tin sinh viên công ty dựa trên MaUser
+        public DataTable GetCongTyInfoByMaUser(int maUser)
+        {
+            // FIX: JOIN trực tiếp vì MaCT và Username đều là VARCHAR
+            string query = @"
+        SELECT 
+            ct.MaCT, ct.TenCT, ct.DiaChi, ct.NguoiLienHe, ct.SoDienThoai
+        FROM USERS u
+        JOIN congty ct ON u.Username = ct.MaCT 
+        WHERE u.MaUser = @MaUser AND u.Role = 'CongTy'";
+
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+        new MySqlParameter("@MaUser", maUser)
+            };
+
+            // Giả định: DAL.Database.GetData là hàm lấy dữ liệu từ CSDL
+            return DAL.DBHelper.GetData(query, parameters);
+        }
+
         // Hàm kiểm tra và thay đổi mật khẩu
         public bool ChangePasscode(int maUser, string oldPass, string newPass)
         {

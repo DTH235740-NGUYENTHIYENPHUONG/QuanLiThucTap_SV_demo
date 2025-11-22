@@ -272,7 +272,7 @@ namespace QuanLiThucTap_SV
 
 
         // ===============================================
-        // E. ĐỔI MẬT KHẨU & ĐĂNG XUẤT
+        // D. ĐỔI MẬT KHẨU & ĐĂNG XUẤT
         // ===============================================
         private void btnDangXuat_Click(object sender, EventArgs e)
         {

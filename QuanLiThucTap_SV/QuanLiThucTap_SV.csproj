@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\CongTyBLL.cs" />
     <Compile Include="BLL\GiangVienBLL.cs" />
     <Compile Include="BLL\PhanCongBLL.cs" />
     <Compile Include="BLL\SinhVienBLL.cs" />

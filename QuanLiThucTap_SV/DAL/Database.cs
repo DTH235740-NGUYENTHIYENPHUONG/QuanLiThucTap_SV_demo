@@ -9,7 +9,7 @@ namespace QuanLiThucTap_SV.DAL
     internal static class DBHelper
     {
         // 🚨 Connection String: Bạn kiểm tra lại Pwd
-        private static string connectionString = "Server=localhost;Database=qltt;Uid=root;Pwd=123456;";
+        private static string connectionString = "Server=localhost;Database=qlitt;Uid=root;Pwd=123456;";
 
         public static MySqlConnection GetConnection()
         {
