@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qltt
+-- Host: 127.0.0.1    Database: qlitt
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -16,31 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sinhvien`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `sinhvien`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sinhvien` (
-  `MaSV` varchar(10) NOT NULL,
-  `HoTen` varchar(100) NOT NULL,
-  `NgaySinh` date DEFAULT NULL,
-  `GioiTinh` varchar(10) DEFAULT NULL,
-  `SoDienThoai` varchar(15) DEFAULT NULL,
-  `MaLop` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`MaSV`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `users` (
+  `MaUser` int NOT NULL AUTO_INCREMENT,
+  `Username` varchar(50) NOT NULL,
+  `Passcode` varchar(255) NOT NULL,
+  `HoTen` varchar(100) DEFAULT NULL,
+  `Role` enum('Admin','GiangVien','CongTy','SinhVien') NOT NULL,
+  `TrangThai` tinyint DEFAULT '1',
+  PRIMARY KEY (`MaUser`),
+  UNIQUE KEY `Username_UNIQUE` (`Username`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sinhvien`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `sinhvien` WRITE;
-/*!40000 ALTER TABLE `sinhvien` DISABLE KEYS */;
-INSERT INTO `sinhvien` VALUES ('sv001','an','2001-10-10','nam','0123321014','a1'),('sv002','but','2002-05-05','nữ','0123456789','a1'),('sv003','binh','2025-11-21','Nam','0123578964','24bt');
-/*!40000 ALTER TABLE `sinhvien` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin','123','ab','Admin',1),(2,'gv001','456','Trần Văn A','GiangVien',1),(3,'sv001','111','av','SinhVien',1),(4,'ct001','110','TNHH AL','CongTy',1),(5,'gv002','001','Bùi Thị C','GiangVien',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-21 14:20:34
+-- Dump completed on 2025-11-22 22:40:34

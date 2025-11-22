@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qltt
+-- Host: 127.0.0.1    Database: qlitt
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `congty`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `congty` (
-  `MaCT` int NOT NULL AUTO_INCREMENT,
+  `MaCT` varchar(10) NOT NULL,
   `TenCT` varchar(255) NOT NULL,
   `DiaChi` varchar(255) DEFAULT NULL,
   `NguoiLienHe` varchar(100) DEFAULT NULL,
   `SoDienThoai` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`MaCT`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `congty` (
 
 LOCK TABLES `congty` WRITE;
 /*!40000 ALTER TABLE `congty` DISABLE KEYS */;
-INSERT INTO `congty` VALUES (1,'AnDuc','TPHCM','Tam','0147896523');
+INSERT INTO `congty` VALUES ('ct001','TNHH AL','TPHCM','Anh An','0321654789'),('ct002','TDLT','LA','Chị H','0147896523');
 /*!40000 ALTER TABLE `congty` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-21 14:20:34
+-- Dump completed on 2025-11-22 22:40:34

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: qltt
+-- Host: 127.0.0.1    Database: qlitt
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -16,35 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `phancong`
+-- Table structure for table `giangvien`
 --
 
-DROP TABLE IF EXISTS `phancong`;
+DROP TABLE IF EXISTS `giangvien`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `phancong` (
-  `MaSV` varchar(10) NOT NULL,
-  `MaCT` int NOT NULL,
-  `MaGVGS` varchar(10) NOT NULL,
-  `NgayBatDauTT` date NOT NULL,
-  `TrangThai` enum('Dang TT','Hoan Thanh','Huy','Cho Duyet') NOT NULL,
-  PRIMARY KEY (`MaSV`,`MaCT`,`MaGVGS`),
-  KEY `MaCT` (`MaCT`),
-  KEY `MaGVGS` (`MaGVGS`),
-  CONSTRAINT `phancong_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `phancong_ibfk_2` FOREIGN KEY (`MaCT`) REFERENCES `congty` (`MaCT`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `phancong_ibfk_3` FOREIGN KEY (`MaGVGS`) REFERENCES `giangvien` (`MaGV`) ON DELETE RESTRICT ON UPDATE CASCADE
+CREATE TABLE `giangvien` (
+  `MaGV` varchar(10) NOT NULL,
+  `HoTen` varchar(100) NOT NULL,
+  `MaKhoa` varchar(10) DEFAULT NULL,
+  `Email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`MaGV`),
+  UNIQUE KEY `Email_UNIQUE` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `phancong`
+-- Dumping data for table `giangvien`
 --
 
-LOCK TABLES `phancong` WRITE;
-/*!40000 ALTER TABLE `phancong` DISABLE KEYS */;
-INSERT INTO `phancong` VALUES ('sv001',1,'gv001','2020-01-01','Dang TT'),('sv002',1,'gv001','2020-01-01','Dang TT'),('sv003',1,'gv001','2025-11-21','Cho Duyet');
-/*!40000 ALTER TABLE `phancong` ENABLE KEYS */;
+LOCK TABLES `giangvien` WRITE;
+/*!40000 ALTER TABLE `giangvien` DISABLE KEYS */;
+INSERT INTO `giangvien` VALUES ('gv001','Trần Văn A','CNTT','a@mail'),('gv002','Bùi Thị C','NN','c@email');
+/*!40000 ALTER TABLE `giangvien` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-21 14:20:34
+-- Dump completed on 2025-11-22 22:40:34
