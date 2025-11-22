@@ -178,7 +178,7 @@ namespace QuanLiThucTap_SV
                 try
                 {
                     string maSV = row["MaSV"].ToString();
-                    int maCT = Convert.ToInt32(row["MaCT"]);
+                    string maCT = row["MaCT"].ToString();
                     string maGVGS = row["MaGVGS"].ToString();
 
                     bool phanCongChanged = false;
@@ -195,7 +195,8 @@ namespace QuanLiThucTap_SV
                     if (newTrangThai != row["TrangThai", DataRowVersion.Original].ToString() ||
                         newNgayBatDau != Convert.ToDateTime(row["NgayBatDauTT", DataRowVersion.Original]))
                     {
-                        int result = pcBLL.UpdatePhanCong(maSV, maCT, maGVGS, newTrangThai, newNgayBatDau);
+                        int result = pcBLL.UpdatePhanCong(maSV, Convert.ToInt32(maCT), maGVGS, newTrangThai, newNgayBatDau);
+
                         if (result > 0)
                         {
                             successCountPhanCong++;

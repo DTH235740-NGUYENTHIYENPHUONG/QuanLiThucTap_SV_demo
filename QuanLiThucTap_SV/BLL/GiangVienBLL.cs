@@ -82,7 +82,7 @@ namespace QuanLiThucTap_SV.BLL
         }
 
         // 6. CẬP NHẬT ĐIỂM GIÁO VIÊN GIÁM SÁT (DiemGVGS) - NẾU BẢN GHI CHƯA TỒN TẠI THÌ TẠO MỚI
-        public int UpdateDiemGVGSSimple(string maSV, int maCT, string maGVGS, decimal diemGVGS)
+        public int UpdateDiemGVGSSimple(string maSV, string maCT, string maGVGS, decimal diemGVGS)
         {
             // 1. KIỂM TRA bản ghi đã tồn tại chưa
             string checkQuery = "SELECT COUNT(*) FROM ketqua_thuctap WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS"; //
