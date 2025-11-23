@@ -69,7 +69,6 @@ namespace QuanLiThucTap_SV
             this.lblDiemTongKet = new System.Windows.Forms.Label();
             this.lblDiemCongTy = new System.Windows.Forms.Label();
             this.lblDiemGVGS = new System.Windows.Forms.Label();
-            this.btnXoaBaoCao = new System.Windows.Forms.Button();
             this.panel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -122,7 +121,6 @@ namespace QuanLiThucTap_SV
             // 
             this.groupBox2.Controls.Add(this.btnDangXuat);
             this.groupBox2.Controls.Add(this.btnDoiMatKhau);
-            this.groupBox2.Controls.Add(this.btnXoaBaoCao);
             this.groupBox2.Controls.Add(this.btnThemBaoCao);
             this.groupBox2.Location = new System.Drawing.Point(12, 436);
             this.groupBox2.Name = "groupBox2";
@@ -394,16 +392,6 @@ namespace QuanLiThucTap_SV
             this.lblDiemGVGS.TabIndex = 26;
             this.lblDiemGVGS.Text = "(Điểm Giảng Viên)";
             // 
-            // btnXoaBaoCao
-            // 
-            this.btnXoaBaoCao.Location = new System.Drawing.Point(0, 65);
-            this.btnXoaBaoCao.Name = "btnXoaBaoCao";
-            this.btnXoaBaoCao.Size = new System.Drawing.Size(347, 34);
-            this.btnXoaBaoCao.TabIndex = 1;
-            this.btnXoaBaoCao.Text = "Xóa báo cáo";
-            this.btnXoaBaoCao.UseVisualStyleBackColor = true;
-            this.btnXoaBaoCao.Click += new System.EventHandler(this.btnXoaBaoCao_Click);
-            // 
             // StudentPortalForm
             // 
             this.ClientSize = new System.Drawing.Size(1031, 734);
@@ -453,6 +441,5 @@ namespace QuanLiThucTap_SV
         private Label lblDiemCongTy;
         private Label lblDiemTongKet;
         private Label lblTrangThai;
-        private Button btnXoaBaoCao;
     }
 }

@@ -229,7 +229,7 @@ namespace QuanLiThucTap_SV
             }
         }
 
-        private void btnXoaBaoCao_Click(object sender, EventArgs e)
+        /*private void btnXoaBaoCao_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(currentReportPath))
             {
@@ -267,7 +267,7 @@ namespace QuanLiThucTap_SV
                     MessageBox.Show($"Lỗi khi xóa file vật lý: {ex.Message}", "Lỗi Hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
+        } */
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
