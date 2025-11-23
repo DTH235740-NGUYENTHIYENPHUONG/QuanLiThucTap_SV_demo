@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\AdminBLL.cs" />
     <Compile Include="BLL\CongTyBLL.cs" />
     <Compile Include="BLL\GiangVienBLL.cs" />
     <Compile Include="BLL\PhanCongBLL.cs" />
@@ -111,6 +112,18 @@
     </Compile>
     <Compile Include="GIAODIEN_UI\frmDoiMatKhau.Designer.cs">
       <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GIAODIEN_UI\frmQuanLyPhanCong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GIAODIEN_UI\frmQuanLyPhanCong.Designer.cs">
+      <DependentUpon>frmQuanLyPhanCong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GIAODIEN_UI\frmQuanLyUsers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GIAODIEN_UI\frmQuanLyUsers.Designer.cs">
+      <DependentUpon>frmQuanLyUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="GIAODIEN_UI\frmThemBaoCao.cs">
       <SubType>Form</SubType>
@@ -154,6 +167,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GIAODIEN_UI\frmDoiMatKhau.resx">
       <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GIAODIEN_UI\frmQuanLyPhanCong.resx">
+      <DependentUpon>frmQuanLyPhanCong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GIAODIEN_UI\frmQuanLyUsers.resx">
+      <DependentUpon>frmQuanLyUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GIAODIEN_UI\frmThemBaoCao.resx">
       <DependentUpon>frmThemBaoCao.cs</DependentUpon>

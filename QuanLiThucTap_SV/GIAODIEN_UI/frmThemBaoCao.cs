@@ -6,7 +6,7 @@ using QuanLiThucTap_SV.BLL;
 using System.Drawing;
 
 
-namespace QuanLiThucTap_SV.GIAODIEN_UI // Thay đổi namespace nếu cần
+namespace QuanLiThucTap_SV.GIAODIEN_UI 
 {
     public partial class frmThemBaoCao : Form
     {

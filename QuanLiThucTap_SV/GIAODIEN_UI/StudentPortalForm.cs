@@ -212,7 +212,7 @@ namespace QuanLiThucTap_SV
             }
         }
         // ===============================================
-        // F. CHỨC NĂNG BÁO CÁO (Tạm thời để trống)
+        // F. CHỨC NĂNG BÁO CÁO 
         // ===============================================
         private void btnThemBaoCao_Click(object sender, EventArgs e)
         {

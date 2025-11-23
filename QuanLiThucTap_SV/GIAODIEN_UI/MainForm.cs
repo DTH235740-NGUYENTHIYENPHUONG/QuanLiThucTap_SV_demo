@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLiThucTap_SV.GIAODIEN_UI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,81 +14,75 @@ namespace QuanLiThucTap_SV
     public partial class MainForm : Form
     {
 
-        private string loggedInUserRole;
-
-        // 1. Hàm khởi tạo nhận Role (Sẽ gọi từ LoginForm)
-        public MainForm(string role)
-        {
-            InitializeComponent();
-            this.loggedInUserRole = role;
-            this.Text = $"Hệ Thống Quản Lý Thực Tập - Quyền: {role}";
-
-            // Gọi hàm Phân quyền
-            ApplyPermissions(role);
-        }
 
         public MainForm()
         {
             InitializeComponent();
+            this.Text = "Quản Lý Hệ Thống - Administrator";
         }
 
-        private void ApplyPermissions(string role)
-        {
-            // Mặc định ẩn các chức năng nhạy cảm hoặc không dùng chung
-            tsmiQLNguoiDung.Visible = false;
-            tsmiCongTy.Visible = false;
-            tsmiPhanCongTT.Visible = false;
-
-            switch (role)
-            {
-                case "Admin":
-                    // Admin được xem và quản lý tất cả
-                    tsmiQLNguoiDung.Visible = true;
-                    tsmiCongTy.Visible = true;
-                    tsmiPhanCongTT.Visible = true;
-                    tsmiDanhMuc.Visible = true; // Hiện menu cha
-                    tsmiNghiepVu.Visible = true;
-                    break;
-
-                case "CanBo": // Cán bộ Quản lý Thực tập
-                    // Cán bộ quản lý danh mục và phân công
-                    tsmiCongTy.Visible = true;
-                    tsmiPhanCongTT.Visible = true;
-                    tsmiDanhMuc.Visible = true;
-                    tsmiNghiepVu.Visible = true;
-                    break;
-
-                case "GiangVien": // Giáo viên Giám sát
-                    // Giảng viên chỉ cần xem danh sách sinh viên, không quản lý CSDL
-                    tsmiDanhMuc.Visible = true;
-                    tsmiSinhVien.Visible = true;
-                    tsmiCongTy.Visible = false; // Không được quản lý/thêm Công ty
-                    tsmiNghiepVu.Visible = false; // Không được Phân công
-
-                    // Nếu bạn có Menu "Báo cáo điểm", thì giữ lại
-                    // tsmiBaoCaoDiem.Visible = true;
-                    break;
-            }
-        }
-
+        
         private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void tsmiDangXuat_Click(object sender, EventArgs e)
+        // CHỨC NĂNG HỆ THỐNG
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có muốn đăng xuất không?", "Xác Nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            Session.Logout(); // Xóa thông tin Session
+            this.Close();    // Đóng form 
+            LoginForm login = new LoginForm();
+            login.Show();    // Mở lại Form Đăng nhập
+        }
 
-            if (result == DialogResult.Yes)
+        private void thoátHệThốngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Session.Logout();
+            this.Close();
+        }
+
+        private void quảnLíNgườiDùngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDoiMatKhau doiMatKhauForm = new frmDoiMatKhau();
+            doiMatKhauForm.ShowDialog();
+        }
+
+        // CHỨC NĂNG QUẢN LÝ
+
+        private void tsmiTaiKhoan_Click(object sender, EventArgs e)
+        {
+            // 1. Kiểm tra nếu Form đã mở, thì kích hoạt nó
+            foreach (Form form in this.MdiChildren)
             {
-                // Mở lại Form Đăng nhập
-                LoginForm login = new LoginForm();
-                login.Show();
-
-                // Đóng Form Main
-                this.Close();
+                if (form is frmQuanLyUsers)
+                {
+                    form.Activate();
+                    return;
+                }
             }
+
+            // 2. Nếu Form chưa mở, tạo và mở Form mới
+            frmQuanLyUsers userForm = new frmQuanLyUsers();
+            userForm.MdiParent = this; // Đặt Form cha
+            userForm.Show();
+        }
+
+        private void tsmiPhanCongThucTap_Click(object sender, EventArgs e)
+        {
+            // 1. Kiểm tra nếu Form đã mở, thì kích hoạt nó
+            foreach (Form form in this.MdiChildren)
+            {
+                if (form is frmQuanLyPhanCong)
+                {
+                    form.Activate();
+                    return;
+                }
+            }
+            // 2. Nếu Form chưa mở, tạo và mở Form mới
+            frmQuanLyPhanCong pcForm = new frmQuanLyPhanCong();
+            pcForm.MdiParent = this; // Đặt Form cha
+            pcForm.Show();
         }
     }
 }
