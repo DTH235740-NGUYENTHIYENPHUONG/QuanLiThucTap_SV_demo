@@ -192,6 +192,7 @@ namespace QuanLiThucTap_SV
                     DateTime newNgayBatDau = Convert.ToDateTime(row["NgayBatDauTT", DataRowVersion.Current]);
 
                     // So sánh với giá trị gốc để chỉ lưu khi thực sự thay đổi
+
                     if (newTrangThai != row["TrangThai", DataRowVersion.Original].ToString() ||
                         newNgayBatDau != Convert.ToDateTime(row["NgayBatDauTT", DataRowVersion.Original]))
                     {
@@ -203,6 +204,7 @@ namespace QuanLiThucTap_SV
                             phanCongChanged = true;
                         }
                     }
+
 
                     // ===============================================
                     // 2B. XỬ LÝ LƯU ĐIỂM GIÁM SÁT (DiemGVGS)

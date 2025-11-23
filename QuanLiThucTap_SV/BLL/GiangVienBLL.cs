@@ -129,5 +129,6 @@ namespace QuanLiThucTap_SV.BLL
 
             return DAL.DBHelper.ExecuteNonQuery(sqlQuery, updateParams);
         }
+
     }
 }

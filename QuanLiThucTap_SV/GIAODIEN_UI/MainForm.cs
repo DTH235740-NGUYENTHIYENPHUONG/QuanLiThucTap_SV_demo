@@ -68,21 +68,5 @@ namespace QuanLiThucTap_SV
             userForm.Show();
         }
 
-        private void tsmiPhanCongThucTap_Click(object sender, EventArgs e)
-        {
-            // 1. Kiểm tra nếu Form đã mở, thì kích hoạt nó
-            foreach (Form form in this.MdiChildren)
-            {
-                if (form is frmQuanLyPhanCong)
-                {
-                    form.Activate();
-                    return;
-                }
-            }
-            // 2. Nếu Form chưa mở, tạo và mở Form mới
-            frmQuanLyPhanCong pcForm = new frmQuanLyPhanCong();
-            pcForm.MdiParent = this; // Đặt Form cha
-            pcForm.Show();
-        }
     }
 }
