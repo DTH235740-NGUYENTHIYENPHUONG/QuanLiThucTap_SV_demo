@@ -25,7 +25,7 @@ namespace QuanLiThucTap_SV.BLL
 
 
         // 2. HÀM XÓA PHÂN CÔNG (Delete)
-        public int DeletePhanCong(string maSV, int maCT, string maGVGS)
+        public int DeletePhanCong(string maSV, string maCT, string maGVGS)
         {
             string query = "DELETE FROM phancong WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS"; //
 
@@ -41,7 +41,7 @@ namespace QuanLiThucTap_SV.BLL
 
         // 3. HÀM CẬP NHẬT TRẠNG THÁI PHÂN CÔNG (Update)
         // Giảng viên thường chỉ có quyền cập nhật trạng thái hoặc ngày bắt đầu
-        public int UpdatePhanCongStatus(string maSV, int maCT, string maGVGS, string newTrangThai)
+        public int UpdatePhanCongStatus(string maSV, string maCT, string maGVGS, string newTrangThai)
         {
             string query = "UPDATE phancong SET TrangThai = @NewStatus WHERE MaSV = @MaSV AND MaCT = @MaCT AND MaGVGS = @MaGVGS"; //
 
@@ -56,7 +56,7 @@ namespace QuanLiThucTap_SV.BLL
             return DAL.DBHelper.ExecuteNonQuery(query, parameters);
         }
 
-        public int UpdatePhanCong(string maSV, int maCT, string maGVGS, string newTrangThai, DateTime newNgayBatDau)
+        public int UpdatePhanCong(string maSV, string maCT, string maGVGS, string newTrangThai, DateTime newNgayBatDau)
         {
             string query = @"
         UPDATE phancong 

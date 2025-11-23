@@ -125,7 +125,7 @@ namespace QuanLiThucTap_SV
                 try
                 {
                     string maSV = selectedRow.Cells["MaSV"].Value.ToString();
-                    int maCT = Convert.ToInt32(selectedRow.Cells["MaCT"].Value);
+                    string maCT = selectedRow.Cells["MaCT"].Value.ToString();
                     string maGVGS = selectedRow.Cells["MaGVGS"].Value.ToString();
 
                     // Gọi BLL để xóa bản ghi Phân Công
@@ -196,7 +196,7 @@ namespace QuanLiThucTap_SV
                     if (newTrangThai != row["TrangThai", DataRowVersion.Original].ToString() ||
                         newNgayBatDau != Convert.ToDateTime(row["NgayBatDauTT", DataRowVersion.Original]))
                     {
-                        int result = pcBLL.UpdatePhanCong(maSV, Convert.ToInt32(maCT), maGVGS, newTrangThai, newNgayBatDau);
+                        int result = pcBLL.UpdatePhanCong(maSV, maCT, maGVGS, newTrangThai, newNgayBatDau);
 
                         if (result > 0)
                         {
