@@ -1,68 +1,84 @@
 ﻿using MySql.Data.MySqlClient;
-using QuanLiThucTap_SV.DAL;
-using QuanLiThucTap_SV.Models;
 using System.Data;
+using System;
+using QuanLiThucTap_SV.DAL;
+using System.Globalization; // Cần thiết cho việc parse NgaySinh
 
 namespace QuanLiThucTap_SV.BLL
 {
     public class SinhVienBLL
     {
-        // 1. LẤY TẤT CẢ SINH VIÊN
-        public DataTable GetAllSinhVien()
+        // ====================================================
+        // 1. HÀM LẤY THÔNG TIN CÁ NHÂN VÀ ĐIỂM (CHO DGV)
+        // ====================================================
+        public DataTable GetStudentInfoAndScoresByMaUser(int maUser)
         {
-            string query = "SELECT * FROM sinhvien"; //
-            return DBHelper.GetData(query);
-        }
+            string maSV = string.Empty;
+            // 1. Lấy MaSV từ USERS trước (vì Form dùng MaUser)
+            string getMaSVQuery = "SELECT Username FROM USERS WHERE MaUser = @MaUser AND Role = 'SinhVien'";
+            DataTable dtUser = DAL.DBHelper.GetData(getMaSVQuery, new MySqlParameter[] { new MySqlParameter("@MaUser", maUser) });
 
-        // 2. THÊM SINH VIÊN (Create)
-        public int InsertSinhVien(SinhVien sv)
-        {
-            string query = "INSERT INTO sinhvien (MaSV, HoTen, NgaySinh, GioiTinh, SoDienThoai, MaLop) " +
-                           "VALUES (@MaSV, @HoTen, @NgaySinh, @GioiTinh, @SoDienThoai, @MaLop)"; //
+            if (dtUser != null && dtUser.Rows.Count > 0)
+            {
+                maSV = dtUser.Rows[0]["Username"].ToString();
+            }
+            else
+            {
+                return null;
+            }
+
+            // 2. JOIN SINHVIEN và KETQUA_THUCTAP/PHANCONG để lấy tất cả thông tin
+            string query = @"
+                SELECT 
+                    sv.MaSV,
+                    sv.HoTen,
+                    sv.NgaySinh,
+                    sv.GioiTinh,
+                    sv.SoDienThoai AS Contact,
+                    sv.MaLop,
+                    kq.DiemGVGS,
+                    kq.DiemCongTy,
+                    kq.DiemTongKet,
+                    pc.TrangThai
+                FROM SINHVIEN sv
+                LEFT JOIN PHANCONG pc ON sv.MaSV = pc.MaSV
+                LEFT JOIN KETQUA_THUCTAP kq ON sv.MaSV = kq.MaSV
+                WHERE sv.MaSV = @MaSV_Param";
 
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@MaSV", sv.MaSV),
-                new MySqlParameter("@HoTen", sv.HoTen),
-                new MySqlParameter("@NgaySinh", sv.NgaySinh.ToString("yyyy-MM-dd")),
-                new MySqlParameter("@GioiTinh", sv.GioiTinh),
-                new MySqlParameter("@SoDienThoai", sv.SoDienThoai),
-                new MySqlParameter("@MaLop", sv.MaLop)
+                new MySqlParameter("@MaSV_Param", maSV)
             };
 
-            return DBHelper.ExecuteNonQuery(query, parameters);
+            return DAL.DBHelper.GetData(query, parameters);
         }
 
-        // 3. SỬA SINH VIÊN (Update)
-        public int UpdateSinhVien(SinhVien sv)
+        // ====================================================
+        // 2. HÀM CẬP NHẬT THÔNG TIN CÁ NHÂN (Dùng cho nút Lưu)
+        // ====================================================
+        public int UpdateStudentInfo(string maSV, string hoTen, DateTime ngaySinh, string gioiTinh, string sdt, string maLop)
         {
-            string query = "UPDATE sinhvien SET HoTen = @HoTen, NgaySinh = @NgaySinh, GioiTinh = @GioiTinh, " +
-                           "SoDienThoai = @SoDienThoai, MaLop = @MaLop WHERE MaSV = @MaSV"; //
+            string query = @"
+                UPDATE SINHVIEN 
+                SET 
+                    HoTen = @HoTen, 
+                    NgaySinh = @NgaySinh, 
+                    GioiTinh = @GioiTinh, 
+                    SoDienThoai = @SoDienThoai,
+                    MaLop = @MaLop
+                WHERE MaSV = @MaSV";
 
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@HoTen", sv.HoTen),
-                new MySqlParameter("@NgaySinh", sv.NgaySinh.ToString("yyyy-MM-dd")),
-                new MySqlParameter("@GioiTinh", sv.GioiTinh),
-                new MySqlParameter("@SoDienThoai", sv.SoDienThoai),
-                new MySqlParameter("@MaLop", sv.MaLop),
-                new MySqlParameter("@MaSV", sv.MaSV) // Where clause
-            };
-
-            return DBHelper.ExecuteNonQuery(query, parameters);
-        }
-
-        // 4. XÓA SINH VIÊN (Delete)
-        public int DeleteSinhVien(string maSV)
-        {
-            string query = "DELETE FROM sinhvien WHERE MaSV = @MaSV"; //
-
-            MySqlParameter[] parameters = new MySqlParameter[]
-            {
+                new MySqlParameter("@HoTen", hoTen),
+                new MySqlParameter("@NgaySinh", ngaySinh),
+                new MySqlParameter("@GioiTinh", gioiTinh),
+                new MySqlParameter("@SoDienThoai", sdt),
+                new MySqlParameter("@MaLop", maLop),
                 new MySqlParameter("@MaSV", maSV)
             };
 
-            return DBHelper.ExecuteNonQuery(query, parameters);
+            return DAL.DBHelper.ExecuteNonQuery(query, parameters);
         }
     }
 }
