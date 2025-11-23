@@ -1,11 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
 using QuanLiThucTap_SV.BLL;
+using QuanLiThucTap_SV.GIAODIEN_UI; // Dùng cho frmDoiMatKhau
 using System;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using QuanLiThucTap_SV.GIAODIEN_UI; // Dùng cho frmDoiMatKhau
 
 namespace QuanLiThucTap_SV
 {
@@ -14,6 +16,7 @@ namespace QuanLiThucTap_SV
         private SinhVienBLL svBLL = new SinhVienBLL();
         private DataTable dtStudentInfo; // Biến lưu trữ DataTable cho DGV
         private string currentMaSV = string.Empty; // Biến lưu trữ MaSV
+        private string currentReportPath = string.Empty; // Biến lưu trữ đường dẫn báo cáo hiện tại
 
         // Các Label/Controls cần thiết trên Form (theo ảnh giao diện)
         // Giả định: dgvStudentInfo, lblMaSV, lblUser, btnSuaThongTin, btnDoiMatKhau, btnDangXuat
@@ -213,12 +216,57 @@ namespace QuanLiThucTap_SV
         // ===============================================
         private void btnThemBaoCao_Click(object sender, EventArgs e)
         {
+            if(string.IsNullOrEmpty(currentMaSV))
+            {
+                MessageBox.Show("Không tìm thấy Mã sinh viên để nộp báo cáo.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            frmThemBaoCao formThemBC = new frmThemBaoCao(currentMaSV);
+            if (formThemBC.ShowDialog() == DialogResult.OK)
+            {
+                LoadStudentData();
+            }
         }
 
         private void btnXoaBaoCao_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(currentReportPath))
+            {
+                MessageBox.Show("Không có báo cáo nào để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            DialogResult confirm = MessageBox.Show($"Bạn có chắc chắn muốn xóa báo cáo '{Path.GetFileName(currentReportPath)}' này? Thao tác này sẽ xóa cả file vật lý.", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                try
+                {
+                    // 1. Xóa trong CSDL (set NULL)
+                    int result = svBLL.DeleteReportPath(currentMaSV);
+
+                    if (result > 0)
+                    {
+                        // 2. Xóa file vật lý trên đĩa
+                        if (File.Exists(currentReportPath))
+                        {
+                            File.Delete(currentReportPath);
+                        }
+
+                        MessageBox.Show("Xóa báo cáo thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadStudentData(); // Tải lại dữ liệu
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể xóa đường dẫn báo cáo trong CSDL.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi xóa file vật lý: {ex.Message}", "Lỗi Hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

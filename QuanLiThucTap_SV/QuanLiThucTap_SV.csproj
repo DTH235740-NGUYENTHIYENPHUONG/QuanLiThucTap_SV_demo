@@ -112,6 +112,12 @@
     <Compile Include="GIAODIEN_UI\frmDoiMatKhau.Designer.cs">
       <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
     </Compile>
+    <Compile Include="GIAODIEN_UI\frmThemBaoCao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GIAODIEN_UI\frmThemBaoCao.Designer.cs">
+      <DependentUpon>frmThemBaoCao.cs</DependentUpon>
+    </Compile>
     <Compile Include="GIAODIEN_UI\LecturerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +155,9 @@
     <EmbeddedResource Include="GIAODIEN_UI\frmDoiMatKhau.resx">
       <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GIAODIEN_UI\frmThemBaoCao.resx">
+      <DependentUpon>frmThemBaoCao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GIAODIEN_UI\LecturerForm.resx">
       <DependentUpon>LecturerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -184,6 +193,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="BaoCaoSV\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
