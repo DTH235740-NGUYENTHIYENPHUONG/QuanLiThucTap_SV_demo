@@ -18,22 +18,18 @@ namespace QuanLiThucTap_SV
         private string currentMaSV = string.Empty; // Biến lưu trữ MaSV
         private string currentReportPath = string.Empty; // Biến lưu trữ đường dẫn báo cáo hiện tại
 
-        // Các Label/Controls cần thiết trên Form (theo ảnh giao diện)
-        // Giả định: dgvStudentInfo, lblMaSV, lblUser, btnSuaThongTin, btnDoiMatKhau, btnDangXuat
-
         public StudentPortalForm()
         {
             InitializeComponent();
             this.Text = "Sinh viên - Thông tin thực tập";
 
-            // Đổi tên nút Lưu cho rõ ràng
             btnSua.Text = "Lưu Thông Tin Cá Nhân";
 
             LoadStudentData();
         }
 
         // ===============================================
-        // A. TẢI THÔNG TIN CÁ NHÂN VÀ ĐIỂM VÀO DGV
+        // TẢI THÔNG TIN CÁ NHÂN VÀ ĐIỂM VÀO DGV
         // ===============================================
         private void LoadStudentData()
         {
@@ -73,13 +69,13 @@ namespace QuanLiThucTap_SV
         }
 
         // ===============================================
-        // B. CẤU HÌNH DGV (Cột nào sửa được, cột nào không)
+        // CẤU HÌNH DGV (Cột nào sửa được, cột nào không)
         // ===============================================
         private void ConfigureStudentDGV()
         {
             dgvStudentInfo.ReadOnly = false; // Cho phép sửa chung
 
-            // 1. Cột KHÔNG ĐƯỢC PHÉP SỬA (Điểm và Khóa chính)
+            //Cột KHÔNG ĐƯỢC PHÉP SỬA (Điểm và Khóa chính)
             string[] readOnlyColumns = { "MaSV", "DiemGVGS", "DiemCongTy", "DiemTongKet", "TrangThai" };
 
             foreach (string col in readOnlyColumns)
@@ -87,7 +83,7 @@ namespace QuanLiThucTap_SV
                 if (dgvStudentInfo.Columns.Contains(col))
                 {
                     dgvStudentInfo.Columns[col].ReadOnly = true;
-                    // Tô màu cột điểm để phân biệt (tùy chọn)
+                    // Tô màu cột điểm để phân biệt
                     if (col.StartsWith("Diem") || col == "TrangThai")
                     {
                         dgvStudentInfo.Columns[col].DefaultCellStyle.BackColor = Color.LightYellow;
@@ -95,7 +91,7 @@ namespace QuanLiThucTap_SV
                 }
             }
 
-            // 2. Cột ĐƯỢC PHÉP SỬA (Thông tin cá nhân)
+            // Cột ĐƯỢC PHÉP SỬA (Thông tin cá nhân)
             string[] editableColumns = { "HoTen", "NgaySinh", "GioiTinh", "Contact", "MaLop" };
 
             foreach (string col in editableColumns)
@@ -106,12 +102,12 @@ namespace QuanLiThucTap_SV
                 }
             }
 
-            // Cấu hình hiển thị ngày tháng
+            
             if (dgvStudentInfo.Columns.Contains("NgaySinh"))
             {
-                dgvStudentInfo.Columns["NgaySinh"].DefaultCellStyle.Format = "yyyy-MM-dd"; // Sử dụng format DB/Invariant
+                dgvStudentInfo.Columns["NgaySinh"].DefaultCellStyle.Format = "yyyy-MM-dd"; 
             }
-            // Cấu hình format điểm
+            
             if (dgvStudentInfo.Columns.Contains("DiemTongKet"))
             {
                 dgvStudentInfo.Columns["DiemTongKet"].DefaultCellStyle.Format = "N2";
@@ -119,7 +115,7 @@ namespace QuanLiThucTap_SV
         }
 
         // ===============================================
-        // C. NÚT LƯU THÔNG TIN CÁ NHÂN (btnSuaThongTin_Click)
+        // NÚT LƯU THÔNG TIN CÁ NHÂN (btnSuaThongTin_Click)
         // ===============================================
         private void btnSua_Click(object sender, EventArgs e)
         {
@@ -142,7 +138,7 @@ namespace QuanLiThucTap_SV
 
             try
             {
-                // 1. Lấy dữ liệu mới từ hàng đã chỉnh sửa
+                // Lấy dữ liệu mới từ hàng đã chỉnh sửa
                 string hoTen = row["HoTen", DataRowVersion.Current].ToString().Trim();
                 string ngaySinhStr = row["NgaySinh", DataRowVersion.Current].ToString();
                 string gioiTinh = row["GioiTinh", DataRowVersion.Current].ToString();
@@ -166,7 +162,7 @@ namespace QuanLiThucTap_SV
                     return;
                 }
 
-                // 2. Gọi BLL để lưu
+                // Gọi BLL để lưu
                 int result = svBLL.UpdateStudentInfo(currentMaSV, hoTen, ngaySinh, gioiTinh, sdt, maLop);
 
                 if (result > 0)
@@ -188,7 +184,7 @@ namespace QuanLiThucTap_SV
         }
 
         // ===============================================
-        // D. NÚT ĐỔI MẬT KHẨU
+        // NÚT ĐỔI MẬT KHẨU
         // ===============================================
         private void btnDoiMatKhau_Click_1(object sender, EventArgs e)
         {
@@ -197,7 +193,7 @@ namespace QuanLiThucTap_SV
         }
 
         // ===============================================
-        // E. NÚT ĐĂNG XUẤT
+        // NÚT ĐĂNG XUẤT
         // ===============================================
         private void btnDangXuat_Click_1(object sender, EventArgs e)
         {
@@ -212,7 +208,7 @@ namespace QuanLiThucTap_SV
             }
         }
         // ===============================================
-        // F. CHỨC NĂNG BÁO CÁO 
+        // CHỨC NĂNG BÁO CÁO 
         // ===============================================
         private void btnThemBaoCao_Click(object sender, EventArgs e)
         {
@@ -229,54 +225,9 @@ namespace QuanLiThucTap_SV
             }
         }
 
-        /*private void btnXoaBaoCao_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(currentReportPath))
-            {
-                MessageBox.Show("Không có báo cáo nào để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            DialogResult confirm = MessageBox.Show($"Bạn có chắc chắn muốn xóa báo cáo '{Path.GetFileName(currentReportPath)}' này? Thao tác này sẽ xóa cả file vật lý.", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (confirm == DialogResult.Yes)
-            {
-                try
-                {
-                    // 1. Xóa trong CSDL (set NULL)
-                    int result = svBLL.DeleteReportPath(currentMaSV);
-
-                    if (result > 0)
-                    {
-                        // 2. Xóa file vật lý trên đĩa
-                        if (File.Exists(currentReportPath))
-                        {
-                            File.Delete(currentReportPath);
-                        }
-
-                        MessageBox.Show("Xóa báo cáo thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadStudentData(); // Tải lại dữ liệu
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không thể xóa đường dẫn báo cáo trong CSDL.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khi xóa file vật lý: {ex.Message}", "Lỗi Hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        } */
-
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
-
-        
-
-
-
     }
 }

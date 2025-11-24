@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using QuanLiThucTap_SV.GIAODIEN_UI; // Dùng cho frmDoiMatKhau
+using QuanLiThucTap_SV.GIAODIEN_UI;
 
 namespace QuanLiThucTap_SV
 {
@@ -15,25 +15,19 @@ namespace QuanLiThucTap_SV
         private UserBLL userBLL = new UserBLL();
         private CongTyBLL ctBLL = new CongTyBLL();
         private DataTable dtStudents;
-        // currentMaCT lưu MaCT dạng chuỗi (VARCHAR)
         private string currentMaCT = string.Empty;
-
-        // Cần đảm bảo các Control trong Form có tên: lblMaCT, lblTenCT, lblDiaChi, lblNguoiLienHe, lblContact, dgvStudents, btnSua, btnDoiMatKhau_1, btnDangXuat
 
         public CompanyForm()
         {
             InitializeComponent();
             this.Text = "Quản lý Thực Tập - Công Ty";
 
-            // Ẩn nút "Xóa" nếu nó vẫn tồn tại
-            // if (this.Controls.Find("btnXoa", true).Length > 0) this.Controls.Find("btnXoa", true)[0].Visible = false;
-
             LoadCompanyInfo();
             LoadStudentDataGrid();
         }
 
         // ===============================================
-        // A. TẢI THÔNG TIN CÔNG TY (Đã Sửa Lỗi Logic Lưu MaCT)
+        // TẢI THÔNG TIN CÔNG TY 
         // ===============================================
         private void LoadCompanyInfo()
         {
@@ -43,12 +37,11 @@ namespace QuanLiThucTap_SV
                 DataTable dt = userBLL.GetCongTyInfoByMaUser(maUser);
                 if (dt.Rows.Count > 0)
                 {
-                    // FIX: Lưu giá trị MaCT (chuỗi/VARCHAR) vào biến currentMaCT
+                   
                     string maCT_Value = dt.Rows[0]["MaCT"].ToString();
                     currentMaCT = maCT_Value;
 
-                    // Cập nhật Label trên Form (có thể thêm tiền tố 'CT' cho người dùng dễ nhìn)
-                    lblMaCT.Text = maCT_Value; // Hoặc "CT " + maCT_Value nếu MaCT là số 1, 2...
+                    lblMaCT.Text = maCT_Value; 
                     lblTenCT.Text = dt.Rows[0]["TenCT"].ToString();
                     lblDiaChi.Text = dt.Rows[0]["DiaChi"].ToString();
                     lblNguoiLienHe.Text = dt.Rows[0]["NguoiLienHe"].ToString();
@@ -63,7 +56,7 @@ namespace QuanLiThucTap_SV
         }
 
         // ===============================================
-        // B. TẢI DANH SÁCH SINH VIÊN
+        // TẢI DANH SÁCH SINH VIÊN
         // ===============================================
         private void LoadStudentDataGrid()
         {
@@ -76,34 +69,29 @@ namespace QuanLiThucTap_SV
             // Cấu hình DGV
             dgvStudents.ReadOnly = false;
 
-            // Ẩn các cột khóa chính và cột không cần sửa
             if (dgvStudents.Columns.Contains("MaCT")) dgvStudents.Columns["MaCT"].Visible = false;
-            if (dgvStudents.Columns.Contains("MaGVGS")) dgvStudents.Columns["MaGVGS"].Visible = false;
+            if (dgvStudents.Columns.Contains("MaGVGS")) dgvStudents.Columns["MaGVGS"].Visible = true;
             if (dgvStudents.Columns.Contains("MaSV")) dgvStudents.Columns["MaSV"].ReadOnly = true;
-
-            // Đặt các cột hiển thị ReadOnly = true
             if (dgvStudents.Columns.Contains("TenSV")) dgvStudents.Columns["TenSV"].ReadOnly = true;
             if (dgvStudents.Columns.Contains("NgayBatDauTT")) dgvStudents.Columns["NgayBatDauTT"].ReadOnly = true;
 
-            // Cột Trạng Thái và Điểm cho phép sửa
-            if (dgvStudents.Columns.Contains("TrangThai")) dgvStudents.Columns["TrangThai"].ReadOnly = false;
+            // Cột Điểm cho phép sửa
             if (dgvStudents.Columns.Contains("DiemCongTy"))
             {
                 dgvStudents.Columns["DiemCongTy"].ReadOnly = false;
-                dgvStudents.Columns["DiemCongTy"].DefaultCellStyle.Format = "N2";
+                dgvStudents.Columns["DiemCongTy"].DefaultCellStyle.Format = "N2"; // Định dạng số với 2 chữ số thập phân
             }
         }
 
         // ===============================================
-        // C. NÚT SỬA VÀ LƯU ĐIỂM (btnSua_Click) (Đã Sửa Lỗi Định dạng Số)
+        // NÚT SỬA VÀ LƯU ĐIỂM 
         // ===============================================
         private void btnSua_Click(object sender, EventArgs e)
         {
-            // 1. Kết thúc chỉnh sửa cell hiện tại
-            dgvStudents.EndEdit();
+     
+            dgvStudents.EndEdit(); // Kết thúc việc chỉnh sửa hiện tại
 
-            // 2. Lấy tất cả các hàng đã được chỉnh sửa
-            DataTable changedTable = dtStudents.GetChanges(DataRowState.Modified);
+            DataTable changedTable = dtStudents.GetChanges(DataRowState.Modified); // Lấy các hàng đã thay đổi
 
             if (changedTable == null || changedTable.Rows.Count == 0)
             {
@@ -112,11 +100,9 @@ namespace QuanLiThucTap_SV
             }
 
             int successCount = 0;
-
-            // FIX: MaCT là STRING (VARCHAR), không cần tryParse sang INT
             string maCT_Str = currentMaCT;
 
-            // 3. Lặp qua các hàng đã thay đổi và gọi BLL để lưu
+            // Lặp qua các hàng đã thay đổi và gọi BLL để lưu
             foreach (DataRow row in changedTable.Rows)
             {
                 try
@@ -132,7 +118,6 @@ namespace QuanLiThucTap_SV
                     {
                         string diemStr = row["DiemCongTy", DataRowVersion.Current].ToString();
 
-                        // FIX LỖI ĐỊNH DẠNG: Sử dụng CultureInfo.InvariantCulture (dấu chấm)
                         if (decimal.TryParse(diemStr,
                                              NumberStyles.Any,
                                              CultureInfo.InvariantCulture,
@@ -162,7 +147,6 @@ namespace QuanLiThucTap_SV
                         }
                     }
 
-                    // NẾU CÓ THAY ĐỔI, TĂNG successCount
                     if (diemChanged) successCount++;
                 }
                 catch (Exception ex)
@@ -205,7 +189,6 @@ namespace QuanLiThucTap_SV
                 Session.MaUser = -1;
                 Session.Role = string.Empty;
                 this.Hide();
-                // Giả định LoginForm nằm trong cùng namespace hoặc có thể truy cập
                 LoginForm loginForm = new LoginForm();
                 loginForm.Show();
             }

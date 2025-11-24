@@ -65,11 +65,11 @@ namespace QuanLiThucTap_SV.BLL
 
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-        new MySqlParameter("@NewTrangThai", newTrangThai),
-        new MySqlParameter("@NewNgayBatDau", newNgayBatDau.ToString("yyyy-MM-dd")),
-        new MySqlParameter("@MaSV", maSV),
-        new MySqlParameter("@MaCT", maCT),
-        new MySqlParameter("@MaGVGS", maGVGS)
+                new MySqlParameter("@NewTrangThai", newTrangThai),
+                new MySqlParameter("@NewNgayBatDau", newNgayBatDau.ToString("yyyy-MM-dd")),
+                new MySqlParameter("@MaSV", maSV),
+                new MySqlParameter("@MaCT", maCT),
+                new MySqlParameter("@MaGVGS", maGVGS)
             };
 
             return DAL.DBHelper.ExecuteNonQuery(query, parameters);

@@ -8,7 +8,7 @@ namespace QuanLiThucTap_SV.DAL
     // Lớp hỗ trợ truy cập cơ sở dữ liệu (DAL)
     internal static class DBHelper
     {
-        // 🚨 Connection String: Bạn kiểm tra lại Pwd
+        
         private static string connectionString = "Server=localhost;Database=qlitt;Uid=root;Pwd=123456;";
 
         public static MySqlConnection GetConnection()

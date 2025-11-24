@@ -1,5 +1,7 @@
 ﻿using System;
 
+// Models đại diện cho bảng giangvien
+
 namespace QuanLiThucTap_SV.Models
 {
     public class GiangVien

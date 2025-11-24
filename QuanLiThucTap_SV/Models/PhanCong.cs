@@ -1,5 +1,7 @@
 ﻿using System;
 
+// Models đại diện cho bảng phancong trong cơ sở dữ liệu
+
 namespace QuanLiThucTap_SV.Models
 {
     // Đại diện cho bảng phancong

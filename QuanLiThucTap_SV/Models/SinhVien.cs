@@ -1,5 +1,7 @@
 ﻿using System;
 
+// Bảng lấy thông tin sinh viên
+
 namespace QuanLiThucTap_SV.Models
 {
     public class SinhVien

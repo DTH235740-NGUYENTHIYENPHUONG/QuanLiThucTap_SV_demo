@@ -1,7 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Data;
 using System;
-using QuanLiThucTap_SV.DAL; // Giả định DAL.Database nằm trong namespace này
+using QuanLiThucTap_SV.DAL; 
 using System.Globalization;
 
 namespace QuanLiThucTap_SV.BLL
@@ -9,7 +9,7 @@ namespace QuanLiThucTap_SV.BLL
     public class SinhVienBLL
     {
         // ====================================================
-        // 1. LẤY THÔNG TIN CÁ NHÂN, ĐIỂM VÀ ĐƯỜNG DẪN BÁO CÁO
+        // LẤY THÔNG TIN CÁ NHÂN, ĐIỂM VÀ ĐƯỜNG DẪN BÁO CÁO
         // ====================================================
         public DataTable GetStudentInfoAndScoresByMaUser(int maUser)
         {
@@ -53,7 +53,7 @@ namespace QuanLiThucTap_SV.BLL
         }
 
         // ====================================================
-        // 2. CẬP NHẬT THÔNG TIN CÁ NHÂN (TỪ DGV)
+        // CẬP NHẬT THÔNG TIN CÁ NHÂN (TỪ DGV)
         // ====================================================
         public int UpdateStudentInfo(string maSV, string hoTen, DateTime ngaySinh, string gioiTinh, string sdt, string maLop)
         {
@@ -82,7 +82,7 @@ namespace QuanLiThucTap_SV.BLL
         }
 
         // ====================================================
-        // 3. THÊM/CẬP NHẬT (GHI ĐÈ) ĐƯỜNG DẪN BÁO CÁO DUY NHẤT
+        // THÊM/CẬP NHẬT (GHI ĐÈ) ĐƯỜNG DẪN BÁO CÁO DUY NHẤT
         // ====================================================
         public int UpdateReportPath(string maSV, string duongDan)
         {
@@ -91,21 +91,6 @@ namespace QuanLiThucTap_SV.BLL
             MySqlParameter[] parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@DuongDan", duongDan),
-                new MySqlParameter("@MaSV", maSV)
-            };
-
-            return DAL.DBHelper.ExecuteNonQuery(query, parameters);
-        }
-
-        // ====================================================
-        // 4. XÓA BÁO CÁO (SET DuongDanBaoCao VỀ NULL)
-        // ====================================================
-        public int DeleteReportPath(string maSV)
-        {
-            string query = "UPDATE SINHVIEN SET DuongDanBaoCao = NULL WHERE MaSV = @MaSV";
-
-            MySqlParameter[] parameters = new MySqlParameter[]
-            {
                 new MySqlParameter("@MaSV", maSV)
             };
 

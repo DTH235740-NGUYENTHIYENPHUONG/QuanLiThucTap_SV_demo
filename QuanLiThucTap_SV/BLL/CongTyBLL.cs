@@ -2,7 +2,7 @@
 using QuanLiThucTap_SV.DAL;
 using System.Data;
 using System;
-using System.Windows.Forms; // Dùng cho MessageBox nếu cần báo lỗi CSDL
+using System.Windows.Forms; 
 
 namespace QuanLiThucTap_SV.BLL
 {
@@ -13,7 +13,7 @@ namespace QuanLiThucTap_SV.BLL
         // ====================================================
         public DataTable GetStudentsByCompany(string maCT)
         {
-            // Truy vấn lấy chi tiết sinh viên, giảng viên giám sát và Điểm Công Ty hiện tại
+            
             string query = @"
                 SELECT 
                     pc.MaSV,             -- Khóa chính
@@ -22,7 +22,7 @@ namespace QuanLiThucTap_SV.BLL
                     sv.HoTen AS TenSV, 
                     pc.NgayBatDauTT, 
                     pc.TrangThai, 
-                    kq.DiemCongTy        -- Điểm Công ty (Cột để nhập liệu)
+                    kq.DiemCongTy        
                 FROM phancong pc
                 JOIN sinhvien sv ON pc.MaSV = sv.MaSV
                 LEFT JOIN ketqua_thuctap kq ON 
@@ -34,7 +34,7 @@ namespace QuanLiThucTap_SV.BLL
                 new MySqlParameter("@MaCT", maCT)
             };
 
-            // Giả định bạn có một lớp Database.cs với hàm GetData(string query, MySqlParameter[] parameters)
+            
             return DAL.DBHelper.GetData(query, parameters);
         }
 
@@ -43,14 +43,13 @@ namespace QuanLiThucTap_SV.BLL
         // ====================================================
         public int UpdateDiemCongTySimple(string maSV, string maCT, string maGVGS, decimal diemCongTy)
         {
-            // 1. KIỂM TRA bản ghi đã tồn tại trong KETQUA_THUCTAP chưa
-            // MaCT phải khớp với MaCT trong KETQUA_THUCTAP (đã giả định là VARCHAR)
+            //KIỂM TRA bản ghi đã tồn tại trong KETQUA_THUCTAP chưa
             string checkQuery = "SELECT COUNT(*) FROM ketqua_thuctap WHERE MaSV = @MaSV AND MaCT = @MaCT_Str AND MaGVGS = @MaGVGS";
 
             MySqlParameter[] commonParams = new MySqlParameter[]
             {
             new MySqlParameter("@MaSV", maSV),
-            new MySqlParameter("@MaCT_Str", maCT), // Tham số MaCT là string
+            new MySqlParameter("@MaCT_Str", maCT), 
             new MySqlParameter("@MaGVGS", maGVGS)
             };
 
@@ -58,7 +57,7 @@ namespace QuanLiThucTap_SV.BLL
             int count = (dt != null && dt.Rows.Count > 0) ? Convert.ToInt32(dt.Rows[0][0]) : 0;
 
             string sqlQuery;
-            MySqlParameter[] updateParams;
+            MySqlParameter[] updateParams; 
 
             // Định nghĩa các tham số
             MySqlParameter paramDiem = new MySqlParameter("@DiemCongTy", diemCongTy);
