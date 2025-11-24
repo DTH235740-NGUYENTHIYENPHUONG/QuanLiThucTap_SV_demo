@@ -194,5 +194,19 @@ namespace QuanLiThucTap_SV
             }
         }
 
+        private void CompanyForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

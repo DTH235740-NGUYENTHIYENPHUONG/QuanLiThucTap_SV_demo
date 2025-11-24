@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-
 using System.Windows.Forms;
 using QuanLiThucTap_SV.BLL;
 using System.Drawing;
@@ -33,7 +32,7 @@ namespace QuanLiThucTap_SV.GIAODIEN_UI
         }
 
         // ===============================================
-        // A. KÉO THẢ (DRAG & DROP)
+        // KÉO THẢ (DRAG & DROP)
         // ===============================================
 
         private void pnlDropZone_DragEnter(object sender, DragEventArgs e)

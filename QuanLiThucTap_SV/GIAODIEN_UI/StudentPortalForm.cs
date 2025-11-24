@@ -229,5 +229,15 @@ namespace QuanLiThucTap_SV
         {
 
         }
+
+        private void lblTrangThai_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvStudentInfo_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

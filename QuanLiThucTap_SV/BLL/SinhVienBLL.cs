@@ -55,7 +55,7 @@ namespace QuanLiThucTap_SV.BLL
         // ====================================================
         // CẬP NHẬT THÔNG TIN CÁ NHÂN (TỪ DGV)
         // ====================================================
-        public int UpdateStudentInfo(string maSV, string hoTen, DateTime ngaySinh, string gioiTinh, string sdt, string maLop)
+        public int UpdateStudentInfo(string maSV, string hoTen, DateTime ngaySinh ,string gioiTinh, string sdt, string maLop)
         {
             // (Giữ nguyên) Hàm này chỉ cập nhật thông tin cá nhân
             string query = @"
@@ -71,7 +71,7 @@ namespace QuanLiThucTap_SV.BLL
             MySqlParameter[] parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@HoTen", hoTen),
-                new MySqlParameter("@NgaySinh", ngaySinh),
+                //new MySqlParameter("@NgaySinh", ngaySinh),
                 new MySqlParameter("@GioiTinh", gioiTinh),
                 new MySqlParameter("@SoDienThoai", sdt),
                 new MySqlParameter("@MaLop", maLop),
