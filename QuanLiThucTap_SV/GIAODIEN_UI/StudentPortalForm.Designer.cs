@@ -43,8 +43,9 @@ namespace QuanLiThucTap_SV
             this.btnUpload = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnDangXuat = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.btnDoiMatKhau = new System.Windows.Forms.Button();
+            this.btnDangXuat = new System.Windows.Forms.Button();
             this.btnThemBaoCao = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvStudentInfo = new System.Windows.Forms.DataGridView();
@@ -69,13 +70,12 @@ namespace QuanLiThucTap_SV
             this.lblUser = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudentInfo)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel
@@ -131,34 +131,44 @@ namespace QuanLiThucTap_SV
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Công cụ";
             // 
-            // btnDangXuat
+            // panel2
             // 
-            this.btnDangXuat.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnDangXuat.Location = new System.Drawing.Point(0, 193);
-            this.btnDangXuat.Name = "btnDangXuat";
-            this.btnDangXuat.Size = new System.Drawing.Size(344, 34);
-            this.btnDangXuat.TabIndex = 4;
-            this.btnDangXuat.Text = "Đăng xuất";
-            this.btnDangXuat.UseVisualStyleBackColor = true;
-            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click_1);
+            this.panel2.Controls.Add(this.btnDoiMatKhau);
+            this.panel2.Controls.Add(this.btnDangXuat);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(955, 66);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(344, 217);
+            this.panel2.TabIndex = 5;
             // 
             // btnDoiMatKhau
             // 
             this.btnDoiMatKhau.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnDoiMatKhau.Location = new System.Drawing.Point(0, 159);
+            this.btnDoiMatKhau.Location = new System.Drawing.Point(0, 124);
             this.btnDoiMatKhau.Name = "btnDoiMatKhau";
-            this.btnDoiMatKhau.Size = new System.Drawing.Size(344, 34);
+            this.btnDoiMatKhau.Size = new System.Drawing.Size(344, 46);
             this.btnDoiMatKhau.TabIndex = 3;
             this.btnDoiMatKhau.Text = "Đổi mật khẩu";
             this.btnDoiMatKhau.UseVisualStyleBackColor = true;
             this.btnDoiMatKhau.Click += new System.EventHandler(this.btnDoiMatKhau_Click_1);
+            // 
+            // btnDangXuat
+            // 
+            this.btnDangXuat.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnDangXuat.Location = new System.Drawing.Point(0, 170);
+            this.btnDangXuat.Name = "btnDangXuat";
+            this.btnDangXuat.Size = new System.Drawing.Size(344, 47);
+            this.btnDangXuat.TabIndex = 4;
+            this.btnDangXuat.Text = "Đăng xuất";
+            this.btnDangXuat.UseVisualStyleBackColor = true;
+            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click_1);
             // 
             // btnThemBaoCao
             // 
             this.btnThemBaoCao.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnThemBaoCao.Location = new System.Drawing.Point(3, 22);
             this.btnThemBaoCao.Name = "btnThemBaoCao";
-            this.btnThemBaoCao.Size = new System.Drawing.Size(1296, 34);
+            this.btnThemBaoCao.Size = new System.Drawing.Size(1296, 44);
             this.btnThemBaoCao.TabIndex = 0;
             this.btnThemBaoCao.Text = "Thêm báo cáo";
             this.btnThemBaoCao.UseVisualStyleBackColor = true;
@@ -202,7 +212,7 @@ namespace QuanLiThucTap_SV
             this.dgvStudentInfo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvStudentInfo.ColumnHeadersHeight = 34;
             this.dgvStudentInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dgvStudentInfo.Location = new System.Drawing.Point(3, 291);
+            this.dgvStudentInfo.Location = new System.Drawing.Point(3, 276);
             this.dgvStudentInfo.Name = "dgvStudentInfo";
             this.dgvStudentInfo.ReadOnly = true;
             this.dgvStudentInfo.RowHeadersWidth = 62;
@@ -340,9 +350,9 @@ namespace QuanLiThucTap_SV
             // btnSua
             // 
             this.btnSua.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSua.Location = new System.Drawing.Point(3, 381);
+            this.btnSua.Location = new System.Drawing.Point(3, 366);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(1296, 34);
+            this.btnSua.Size = new System.Drawing.Size(1296, 49);
             this.btnSua.TabIndex = 2;
             this.btnSua.Text = "Sửa thông tin";
             this.btnSua.UseVisualStyleBackColor = true;
@@ -402,16 +412,6 @@ namespace QuanLiThucTap_SV
             this.label2.TabIndex = 6;
             this.label2.Text = "User:";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnDoiMatKhau);
-            this.panel2.Controls.Add(this.btnDangXuat);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(955, 56);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(344, 227);
-            this.panel2.TabIndex = 5;
-            // 
             // StudentPortalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -425,10 +425,10 @@ namespace QuanLiThucTap_SV
             this.panel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudentInfo)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
