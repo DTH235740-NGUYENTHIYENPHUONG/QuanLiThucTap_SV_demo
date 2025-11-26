@@ -71,7 +71,7 @@ namespace QuanLiThucTap_SV.BLL
             MySqlParameter[] parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@HoTen", hoTen),
-                //new MySqlParameter("@NgaySinh", ngaySinh),
+                new MySqlParameter("@NgaySinh", ngaySinh),
                 new MySqlParameter("@GioiTinh", gioiTinh),
                 new MySqlParameter("@SoDienThoai", sdt),
                 new MySqlParameter("@MaLop", maLop),
