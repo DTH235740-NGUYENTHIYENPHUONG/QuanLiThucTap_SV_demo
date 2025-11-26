@@ -13,7 +13,7 @@ namespace QuanLiThucTap_SV.GIAODIEN_UI
         private string maSV;
         private SinhVienBLL svBLL = new SinhVienBLL();
 
-        // Tên thư mục gốc để lưu file (nằm cùng cấp với file .exe)
+        // Tên thư mục gốc để lưu file 
         private const string REPORT_FOLDER = "BaoCaoSV";
 
         public frmThemBaoCao(string studentID)
@@ -35,9 +35,9 @@ namespace QuanLiThucTap_SV.GIAODIEN_UI
         // KÉO THẢ (DRAG & DROP)
         // ===============================================
 
-        private void pnlDropZone_DragEnter(object sender, DragEventArgs e)
+        private void pnlDropZone_DragEnter(object sender, DragEventArgs e) // XỬ LÝ KHI KÉO VÀO KHU VỰC
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) // KIỂM TRA DỮ LIỆU KÉO VÀO CÓ PHẢI LÀ FILE KHÔNG
             {
                 e.Effect = DragDropEffects.Copy;
             }
@@ -47,7 +47,7 @@ namespace QuanLiThucTap_SV.GIAODIEN_UI
             }
         }
 
-        private void pnlDropZone_DragDrop(object sender, DragEventArgs e)
+        private void pnlDropZone_DragDrop(object sender, DragEventArgs e) // XỬ LÝ KHI THẢ VÀO KHU VỰC
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
@@ -61,7 +61,7 @@ namespace QuanLiThucTap_SV.GIAODIEN_UI
         }
 
         // ===============================================
-        // B. NÚT UPLOAD/GHI ĐÈ
+        // NÚT UPLOAD/GHI ĐÈ
         // ===============================================
 
         private void btnUpload_Click(object sender, EventArgs e)
@@ -81,23 +81,22 @@ namespace QuanLiThucTap_SV.GIAODIEN_UI
             {
                 string fileName = Path.GetFileName(sourceFilePath);
 
-                // 1. Tạo thư mục lưu trữ 
-                string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string destDirectory = Path.Combine(appDirectory, REPORT_FOLDER, maSV);
+                string appDirectory = AppDomain.CurrentDomain.BaseDirectory; // Lấy đuờng dẫn thư mục gốc 
+                string destDirectory = Path.Combine(appDirectory, REPORT_FOLDER, maSV); // Tạo đường dẫn theo cấu trúc
 
                 if (!Directory.Exists(destDirectory))
                 {
-                    Directory.CreateDirectory(destDirectory);
+                    Directory.CreateDirectory(destDirectory); // Tạo thư mục nếu chưa tồn tại
                 }
 
-                // 2. Tạo tên file duy nhất 
+                // Tạo tên file duy nhất 
                 string uniqueFileName = $"{maSV}_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}_{fileName}";
                 string destFilePath = Path.Combine(destDirectory, uniqueFileName);
 
-                // 3. COPY file
+                // COPY file
                 File.Copy(sourceFilePath, destFilePath, true);
 
-                // 4. LƯU đường dẫn mới vào CSDL (Sử dụng hàm UPDATE)
+                // LƯU đường dẫn mới vào CSDL (Sử dụng hàm UPDATE)
                 int result = svBLL.UpdateReportPath(maSV, destFilePath);
 
                 if (result > 0)
